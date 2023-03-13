@@ -1,0 +1,105 @@
+{
+  "ReiujiMod:CantDealDamageToPlayerPower": {
+    "NAME": "无法造成伤害",
+    "DESCRIPTIONS": [
+      "", "回合内， ", " 无法对你造成攻击伤害。"
+    ]
+  },
+  "ReiujiMod:ChargeUpPower": {
+    "NAME": "已蓄力",
+    "DESCRIPTIONS": [
+      "本回合内，当你的手牌不足 #b", " 张时，抽牌直至达到这个数目。"
+    ]
+  },
+  "ReiujiMod:ChargeUpPreParePower": {
+    "NAME": "蓄力",
+    "DESCRIPTIONS": [
+      "下个回合，当你的手牌不足 #b", " 张时，抽牌直至达到这个数目。"
+    ]
+  },
+  "ReiujiMod:DarkGraspPower": {
+    "NAME": "黑暗之握",
+    "DESCRIPTIONS": [
+      "每打出一张牌，对一张随机手牌施加 #b", " 层 黑暗之拥 。"
+    ]
+  },
+  "ReiujiMod:EnchantPower": {
+    "NAME": "附魔",
+    "DESCRIPTIONS": [
+      "每当你造成未被格挡的攻击伤害，将 #b", " 张 #y火花 洗入抽牌堆。"
+    ]
+  },
+  "ReiujiMod:EnterTheVoidPower": {
+    "NAME": "踏入虚空",
+    "DESCRIPTIONS": [
+      "每当你抽到一张牌，对其施加 #b", " 层 虚空之拥 。"
+    ]
+  },
+  "ReiujiMod:EscapeTheVoidPower": {
+    "NAME": "逃离虚空",
+    "DESCRIPTIONS": [
+      "每当你抽到一张 #y虚空 ，抽 #b", " 张牌。"
+    ]
+  },
+  "ReiujiMod:FusionReactorPower": {
+    "NAME": "聚变反应堆",
+    "DESCRIPTIONS": [
+      "每当你 消耗 一张牌时，获得 #b", " 点格挡。如果这张牌是你牌组中的牌，则改为获得 #b", " 点 暂时性生命 。"
+    ]
+  },
+  "ReiujiMod:HeatPower": {
+    "NAME": "热度",
+    "DESCRIPTIONS": [
+      "每当你造成攻击伤害时，对相同的目标额外造成一次 #b", " 点非攻击伤害，然后 热度 层数减少 1。"
+    ]
+  },
+  "ReiujiMod:HellWaveCannonPower": {
+    "NAME": "地狱波动炮",
+    "DESCRIPTIONS": [
+      "本回合结束时，若你本回合内没有打出过攻击牌，则获得 #b", " 点 格挡 和 #b", " 点 暂时性生命 。",
+      "（你本回合内 #r已经 打出过攻击牌了。）", "（你本回合内还 #b没有 打出过攻击牌。）"
+    ]
+  },
+  "ReiujiMod:IronDefensePower": {
+    "NAME": "铁壁",
+    "DESCRIPTIONS": [
+      "本回合内，每当你获得 #b格挡 时，获得等同于该数额 #b倍",  "的 暂时性生命 。"
+    ]
+  },
+  "ReiujiMod:RetroAtomicModelPower": {
+    "NAME": "复古原子核模型",
+    "DESCRIPTIONS": [
+      "直到下回合，每受到一次攻击，就获得 #b",  " 点 暂时性生命 。"
+    ]
+  },
+  "ReiujiMod:SecondCircuitPower": {
+    "NAME": "第二回路",
+    "DESCRIPTIONS": [
+      "战斗结束时，恢复等同于 暂时性生命 一半（向上取整）的生命。 NL 恢复量至多为最大生命的 #b",  " % (", ")。"
+    ]
+  },
+  "ReiujiMod:Septentrion": {
+    "NAME": "七星「北斗星辰」",
+    "DESCRIPTIONS": [
+      "每打出 7 张牌，获得 #b", " 点能量。 NL 当前已打出 #b", " 张牌。"
+    ]
+  },
+  "ReiujiMod:ShootingStar": {
+    "NAME": "飞翔之星",
+    "DESCRIPTIONS": [
+      "直到下个回合，受到的所有伤害（失去生命除外）减少 #b", " 点。"
+    ]
+  },
+  "ReiujiMod:TheSunStealer": {
+    "NAME": "「盗日之鸦」",
+    "DESCRIPTIONS": [
+      "抽到 #y虚空 时不会再扣除能量。 NL 每当你抽到一张 #y虚空 时，将其 消耗 。"
+    ]
+  },
+  "ReiujiMod:VengefulNuclearSpiritsOnMonsterPower": {
+    "NAME": "核热的怨灵",
+    "DESCRIPTIONS": [
+      "你的下个回合开始时，受到 #b", " 点伤害。"
+    ]
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "ReiujiMod:AbsoluteDomain": {
+    "NAME": "绝对领域",
+    "DESCRIPTION": "将你的 暂时性生命 翻倍。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": "将你的 暂时性生命 翻倍。"
+  },
+  "ReiujiMod:AdaptiveDefense": {
+    "NAME": "自适应防御",
+    "DESCRIPTION": "将你的格挡与 暂时性生命 中较少者补至与较多者相同的数额。 NL 抽 !M! 张牌。"
+  },
+  "ReiujiMod:AnnihilationTheory": {
+    "NAME": "湮灭理论",
+    "DESCRIPTION": "造成 !D! 点伤害。每有一层 虚空之拥 ，就再造成一次。 NL 这张牌的 虚空之拥 在打出后不会清除。",
+    "UPGRADE_DESCRIPTION": "造成 !D! 点伤害。每有一层 虚空之拥 ，就再造成一次。 NL 这张牌的 虚空之拥 在打出后不会清除，并且可以无限叠加。"
+  },
+  "ReiujiMod:ChargeUp": {
+    "NAME": "蓄力",
+    "DESCRIPTION": "下个回合，每当你的手牌数少于 !M! 张时，抽牌直至手牌数为 !M! 张。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": "下个回合，每当你的手牌数少于 !M! 张时，抽牌直至手牌数为 !M! 张。"
+  },
+  "ReiujiMod:DarkGrasp": {
+    "NAME": "黑暗之握",
+    "DESCRIPTION": "每打出一张牌，对一张随机手牌施加 !M! 层 虚空之拥 。"
+  },
+  "ReiujiMod:Defend_Reiuji": {
+    "NAME": "防御",
+    "DESCRIPTION": "获得 !B! 点格挡。"
+  },
+  "ReiujiMod:Enchant": {
+    "NAME": "附魔",
+    "DESCRIPTION": "每当你造成未被格挡的攻击伤害，将一张 火花 洗入抽牌堆。",
+    "UPGRADE_DESCRIPTION": "固有 。每当你造成未被格挡的攻击伤害，将一张 火花 洗入抽牌堆。"
+  },
+  "ReiujiMod:EnterTheVoid": {
+    "NAME": "踏入虚空",
+    "DESCRIPTION": "每当你抽到一张牌，对其施加 !M! 层 虚空之拥 。"
+  },
+  "ReiujiMod:EscapeTheVoid": {
+    "NAME": "逃离虚空",
+    "DESCRIPTION": "每当你抽到一张 虚空 时，抽 !M! 张牌。"
+  },
+  "ReiujiMod:FlameStorm": {
+    "NAME": "烈焰暴风",
+    "DESCRIPTION": "对所有敌人造成等同于你已经 消耗 的牌数 !M! 倍的伤害。",
+    "EXTENDED_DESCRIPTION": [
+      "（造成 !D! 点伤害）。"
+    ]
+  },
+  "ReiujiMod:FusionReactor": {
+    "NAME": "聚变反应堆",
+    "DESCRIPTION": "每当你 消耗 一张牌时，获得 !M! 点 格挡 。 NL 如果这张牌是你牌组中的牌，则改为获得 !M! 点 暂时性生命 。"
+  },
+  "ReiujiMod:HellFire": {
+    "NAME": "地狱之火",
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL 每有一名敌人，耗能就减少 [E] ，并提升 !M! 点伤害。"
+  },
+  "ReiujiMod:HellsArtificialSun": {
+    "NAME": "「地狱的人造太阳」",
+    "DESCRIPTION": "符卡 。 NL 消耗 一张随机手牌，对所有敌人造成 !D! 点伤害。 NL 回响 ， 消耗 。",
+    "UPGRADE_DESCRIPTION": "符卡 。 NL 消耗 一张手牌，对所有敌人造成 !D! 点伤害。 NL 回响 ， 消耗 。"
+  },
+  "ReiujiMod:HellWaveCannon": {
+    "NAME": "地狱波动炮",
+    "DESCRIPTION": "获得 !TempHP! 点 暂时性生命 与 !Heat! 点 热度 。 NL 本回合结束时，若你在本回合中未打出过攻击牌，再获得一次。"
+  },
+  "ReiujiMod:HoldYourHorses": {
+    "NAME": "你先别急",
+    "DESCRIPTION": "抽取抽牌堆中耗能最高的攻击牌、技能牌和能力牌各一张。 消耗 。",
+    "UPGRADE_DESCRIPTION": "抽取抽牌堆中耗能最高的攻击牌、技能牌和能力牌各一张，并使它们在本场战斗中获得 保留 。 NL 消耗 。"
+  },
+  "ReiujiMod:Ignite": {
+    "NAME": "点燃",
+    "DESCRIPTION": "消耗 一张手牌，对所有敌人造成 !D! 点伤害。 NL 这张牌的耗能每有 [E] ，就抽一张牌。"
+  },
+  "ReiujiMod:InstantCharge": {
+    "NAME": "快速充能",
+    "DESCRIPTION": "获得 !M! 层 易伤 。获得 !Heat! 点 热度 。"
+  },
+  "ReiujiMod:IronDefense": {
+    "NAME": "铁壁",
+    "DESCRIPTION": "本回合中，每当你获得 格挡 时，同时获得等量的 暂时性生命 。 NL 获得 !B! 点 格挡 。 消耗 。",
+    "UPGRADE_DESCRIPTION": "本回合中，每当你获得 格挡 时，同时获得等量的 暂时性生命 。 NL 获得 !B! 点 格挡 。"
+  },
+  "ReiujiMod:NuclearRay": {
+    "NAME": "核能射线",
+    "DESCRIPTION": "对所有敌人造成 1 点伤害，并将一张 火花 洗入抽牌堆。 NL 重复 !M! 次。"
+  },
+  "ReiujiMod:NuclearRupture": {
+    "NAME": "核能爆裂",
+    "DESCRIPTION": "造成 !D! 点伤害 4 次。 NL 抽 !M! 张牌。 NL 将一张 虚空 洗入抽牌堆。"
+  },
+  "ReiujiMod:RadiantBlade": {
+    "NAME": "光刃",
+    "DESCRIPTION": "选择 2 点手牌 升级 。每选择一张已 升级 的手牌，这张牌的伤害就在本场战斗中提升 !M! 点。 NL 造成 !D! 点伤害。",
+    "UPGRADE_DESCRIPTION": "升级 所有手牌。每有一张已 升级 的手牌，这张牌的伤害就在本场战斗中提升 !M! 点。 NL 造成 !D! 点伤害。"
+  },
+  "ReiujiMod:Reorganize": {
+    "NAME": "整备",
+    "DESCRIPTION": "如果你的格挡不足 !B! 点，将其补至 !B! 点。"
+  },
+  "ReiujiMod:RetroAtomicModel": {
+    "NAME": "复古原子核模型",
+    "DESCRIPTION": "获得 !B! 点 格挡 。 NL 直到你的下个回合，每受到一次攻击，获得 !M! 点 暂时性生命 。"
+  },
+  "ReiujiMod:RocketStrike": {
+    "NAME": "火箭打击",
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 打出此牌后，本回合内你只能打出 符卡 牌。"
+  },
+  "ReiujiMod:ScatterSparks": {
+    "NAME": "扩散火花",
+    "DESCRIPTION": "随机对敌人造成 !D! 点伤害 !M! 次。 NL 这张牌的伤害值固定为 1。"
+  },
+  "ReiujiMod:SecondCircuit": {
+    "NAME": "第二回路",
+    "DESCRIPTION": "战斗结束时，恢复等同于 暂时性生命 一半（向上取整）的生命。 NL 恢复量至多为最大生命的 !M! %。"
+  },
+  "ReiujiMod:SeeEyeToEye": {
+    "NAME": "亦步亦趋",
+    "DESCRIPTION": "只有手牌中没有相同的牌时才能打出。 NL 将一张手牌复制 !M! 份。"
+  },
+  "ReiujiMod:Septentrion": {
+    "NAME": "七星「北斗星辰」",
+    "DESCRIPTION": "符卡 。抽 !M! 张牌。 NL 每当你在一回合内打出 7 张牌，获得 [E] [E] [E] [E] [E] [E] [E] 。"
+  },
+  "ReiujiMod:ShieldOverwhelm": {
+    "NAME": "护盾超载",
+    "DESCRIPTION": "获得 !B! 点 格挡 。 NL 将一张 虚空 洗入抽牌堆。"
+  },
+  "ReiujiMod:ShootingStar": {
+    "NAME": "飞翔之星",
+    "DESCRIPTION": "获得 !B! 点 格挡 。抽一张牌。 NL 直到你的下个回合，你受到的所有伤害减少 !M! 点。"
+  },
+  "ReiujiMod:SolarWind": {
+    "NAME": "太阳风",
+    "DESCRIPTION": "消耗 手牌中每种不同的牌各一张。每消耗一张，获得 !B! 点 格挡 。"
+  },
+  "ReiujiMod:Strike_Reiuji": {
+    "NAME": "打击",
+    "DESCRIPTION": "造成 !D! 点伤害。"
+  },
+  "ReiujiMod:TheSunStealer": {
+    "NAME": "「盗日之鸦」",
+    "DESCRIPTION": "符卡 。 抽到 虚空 时不会再扣除能量。 NL 每当你抽到一张 虚空 时，将其 消耗 。",
+    "UPGRADE_DESCRIPTION": "符卡 。 固有 。 NL 抽到 虚空 时不会再扣除能量。 NL 每当你抽到一张 虚空 时，将其 消耗 。"
+  },
+  "ReiujiMod:UniverseSingsToMe": {
+    "NAME": "恒星「宇宙之歌」",
+    "DESCRIPTION": "符卡 。 耗能不足时也可打出，不足的能量以 消耗 等量手牌代替。 NL 将 分子云 洗入抽牌堆。 保留 。 消耗 。",
+    "UPGRADE_DESCRIPTION": "符卡 。 耗能不足时也可打出，不足的能量以 消耗 等量手牌代替。 NL 将 分子云+ 洗入抽牌堆。 保留 。 消耗 。"
+  },
+  "ReiujiMod:UpThrust": {
+    "NAME": "升天指",
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 如果这是你本回合第一次打出 升天指 ，获得 [E] 并抽一张牌。"
+  },
+  "ReiujiMod:UtsuhosUnstableElement": {
+    "NAME": "阿空的不稳定元素",
+    "DESCRIPTION": "抽牌直至手牌上限，然后 消耗 抽牌堆和弃牌堆中剩余的牌。 消耗 。"
+  },
+  "ReiujiMod:VengefulNuclearSpirits": {
+    "NAME": "核热的怨灵",
+    "DESCRIPTION": "选择一名敌人。你的下回合开始前，其受到 !D! 点伤害。 NL 这张牌不会被施加 虚空之拥 ，改为在本场战斗中提升 !M! 点伤害。"
+  },
+  "ReiujiMod:VoidFire": {
+    "NAME": "虚空之火",
+    "DESCRIPTION": "只有具有 虚空之拥 时才能打出。 NL 将你的 热度 变为 !M! 倍。"
+  },
+  "ReiujiMod:VoidGate": {
+    "NAME": "虚空之门",
+    "DESCRIPTION": "获得 !B! 点 格挡 。对一张随机手牌施加 !M! 层 虚空之拥 。",
+    "UPGRADE_DESCRIPTION": "获得 !B! 点 格挡 。选择一张手牌，对其施加 !M! 层 虚空之拥 。"
+  },
+  "ReiujiMod:VoidStrike": {
+    "NAME": "虚空打击",
+    "DESCRIPTION": "造成 !D! 点伤害。对这张牌施加 !M! 层 虚空之拥 。 NL 在具有 虚空之拥 时，造成双倍伤害。"
+  },
+  "ReiujiMod:VoidWalking": {
+    "NAME": "虚空行走",
+    "DESCRIPTION": "当前所有手牌获得 !M! 层 虚空之拥 。本回合结束时， 保留 所有手牌。 消耗 。",
+    "UPGRADE_DESCRIPTION": "保留 。 当前所有手牌获得 !M! 层 虚空之拥 。本回合结束时， 保留 所有手牌。 消耗 。"
+  },
+  "ReiujiMod:WardrobeMalfunction": {
+    "NAME": "走光踢",
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 每有一名敌人，就受到 1 点伤害。"
+  },
+  "ReiujiMod:YatagarasuDive": {
+    "NAME": "鸦符「八咫乌俯冲」",
+    "DESCRIPTION": "符卡 。 保留 。 NL 只能对意图为攻击的敌人打出。对其造成 !D! 点伤害 !M! 次，并且直到你的下个回合，目标无法造成攻击伤害。 NL 被 保留 时，这张牌的伤害提高 1 点。 消耗 。"
+  },
+  
+  
+  "ReiujiMod:BlackHole": {
+    "NAME": "黑洞",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，随机 消耗 一张其他手牌。 NL 离开手牌时，将 分子云 洗入抽牌堆。 NL 此牌被 消耗 时，可以选择一张已被 消耗 的牌加入手牌。",
+    "UPGRADE_DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时， 消耗 一张其他手牌。 NL 离开手牌时，将 分子云+ 洗入抽牌堆。 NL 此牌被 消耗 时，可以选择一张已被 消耗 的牌加入手牌。"
+  },
+  "ReiujiMod:MainSequenceStar": {
+    "NAME": "主序星",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，抽 !M! 张牌。 NL 离开手牌时，将 红巨星 洗入抽牌堆，然后将此牌 消耗 。",
+    "UPGRADE_DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，抽 !M! 张牌。 NL 离开手牌时，将 红巨星+ 洗入抽牌堆，然后将此牌 消耗 。"
+  },
+  "ReiujiMod:MolecularCloud": {
+    "NAME": "分子云",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，获得 !TempHP! 点 暂时性生命 。 NL 离开手牌时，将 主序星 洗入抽牌堆，然后将此牌 消耗 。",
+    "UPGRADE_DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，获得 !TempHP! 点 暂时性生命 。 NL 离开手牌时，将 主序星+ 洗入抽牌堆，然后将此牌 消耗 。"
+  },
+  "ReiujiMod:RedGiantStar": {
+    "NAME": "红巨星",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，获得 [E] [E] 。 NL 离开手牌时，将 超新星 洗入抽牌堆，然后将此牌 消耗 。",
+    "UPGRADE_DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，获得 [E] [E] [E] 。 NL 离开手牌时，将 超新星+ 洗入抽牌堆，然后将此牌 消耗 。"
+  },
+  "ReiujiMod:Spark": {
+    "NAME": "火花",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，获得 !M! 点 热度 ，然后 消耗 。"
+  },
+  "ReiujiMod:SuperNova": {
+    "NAME": "超新星",
+    "DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，对所有敌人造成 !D! 点伤害。 NL 离开手牌时，将 黑洞 洗入抽牌堆，然后将此牌 消耗 。",
+    "UPGRADE_DESCRIPTION": "不能被打出 。 补充 。 NL 抽到此牌时，对所有敌人造成 !D! 点伤害。 NL 离开手牌时，将 黑洞+ 洗入抽牌堆，然后将此牌 消耗 。"
+  },
+
+  "Flee": {
+    "NAME": "落荒而逃",
+    "DESCRIPTION": "!M! 回合后，从当前战斗中逃跑。 虚无 。 NL 干劲 X：提前X回合逃跑。如果所需回合数不多于1，则立刻逃跑。",
+    "UPGRADE_DESCRIPTION": "固有 。!M! 回合后，从当前战斗中逃跑。 虚无 。 NL 干劲 X：提前X回合逃跑。如果所需回合数不多于1，则立刻逃跑。",
+    "EXTENDED_DESCRIPTION": [
+      "（", "回合后逃跑。）", "立刻逃跑。）", "本场战斗无法逃跑！"
+    ]
+  }
+}

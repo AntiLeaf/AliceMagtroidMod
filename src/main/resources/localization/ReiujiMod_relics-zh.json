@@ -1,0 +1,37 @@
+{
+  "ReiujiMod:EyeOfYatagarasu": {
+    "NAME": "八咫乌之目",
+    "FLAVOR": "阿空胸前的巨大眼睛，代表她身体中寄宿着八咫乌的神明。",
+    "DESCRIPTIONS": [
+      "在每场战斗中，结束回合时每剩余 [E] ，就在战斗结束时恢复 #b3 点生命。 NL 恢复量至多为最大生命的 #b20 %。"
+    ]
+  },
+  "ReiujiMod:ControlOrd": {
+    "NAME": "制御棒",
+    "FLAVOR": "阿空右手的一根巨大的棒状物。实际上是用于控制核聚变与裂变的“第三足”。",
+    "DESCRIPTIONS": [
+      "战斗开始时，每有 #b10 %已损失的生命，就获得 #b1 点 热度 。"
+    ]
+  },
+  "ReiujiMod:StarryCloak": {
+    "NAME": "星空披风",
+    "FLAVOR": "阿空的巨大白色披风。不知为何披风的里面是一片星空。",
+    "DESCRIPTIONS": [
+      "你从卡牌中获得的 格挡 、 暂时性生命 和 热度 都提升 #b1 点。"
+    ]
+  },
+  "ReiujiMod:RedHotEyeOfYatagarasu": {
+    "NAME": "通红的八咫鸟之目",
+    "FLAVOR": "更加通红的巨大眼睛。八咫乌的神明正在暴走。",
+    "DESCRIPTIONS": [
+      "在每场战斗中，结束回合时每剩余 [E] ，就在战斗结束时恢复 #b3 点生命。 NL 每回合开始时，也会将恢复量提升 #b3 点。 NL 总恢复量至多为最大生命的 #b20 %。"
+    ]
+  },
+  "CrystalWings": {
+    "NAME": "冰晶羽翼",
+    "FLAVOR": "琪露诺的翅膀。许多人都好奇她是如何用这样的翅膀飞起来的。",
+    "DESCRIPTIONS": [
+     "在每场战斗开始时，获得2层 #y寒冷 与1点 #y干劲 。"
+    ]
+  }
+}

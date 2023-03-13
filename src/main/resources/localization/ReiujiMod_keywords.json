@@ -1,0 +1,34 @@
+{
+  "keywords": [
+    {
+      "NAMES": [
+        "Spell"
+      ],
+      "DESCRIPTION": "#ySpell are some powerful and unique cards. NL #ySpells can be used only once a turn."
+    },
+    {
+      "NAMES": [
+        "Heat"
+      ],
+      "DESCRIPTION": "After each attack, deal damage equals to the amount of #yHeat, then #yHeat decreases by 1. NL If the attack damages all enemies, the #yHeat damage will damage all enemies too."
+    },
+    {
+      "NAMES": [
+        "Embrace"
+      ],
+      "DESCRIPTION": "Each #yEmbrace will decrease the cost of the card by 1, but when played, the same number of #yVoid will be shuffled into your draw pile. NL After played, #yEmbrace will be reset to 0."
+    },
+    {
+      "NAMES": [
+        "Supplement"
+      ],
+      "DESCRIPTION": "Whenever you draws a #ySupplement card, draw one more card."
+    },
+    {
+      "NAMES": [
+        "Echo"
+      ],
+      "DESCRIPTION": "Cards with #yEcho can be played multiple times in one turn. NL A card can only be buffed when played first time in the turn."
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>AliceMod</groupId>
-  <artifactId>AliceMod</artifactId>
+  <groupId>AliceMagtroidMod</groupId>
+  <artifactId>AliceMagtroidMod</artifactId>
   <version>v0.1.0</version>
   <packaging>jar</packaging>
 
@@ -32,7 +32,7 @@
   </dependencies>
 
   <build>
-    <finalName>Alice_Mod</finalName>
+    <finalName>AliceMagtroid_Mod</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -1,7 +1,7 @@
 package AliceMagtroidMod.cards.Reiuji;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -32,7 +32,7 @@ public class Defend_Alice extends AbstractAliceCard {
 			COST,
 			DESCRIPTION,
 			CardType.SKILL,
-			AbstractCardEnum.REIUJI_COLOR,
+			AbstractCardEnum.ALICE_COLOR,
 			CardRarity.BASIC,
 			CardTarget.SELF
 		);

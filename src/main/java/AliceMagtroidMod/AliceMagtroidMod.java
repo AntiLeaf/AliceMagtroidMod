@@ -1,9 +1,8 @@
 package AliceMagtroidMod;
 
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
 import AliceMagtroidMod.cards.Reiuji.*;
 import AliceMagtroidMod.characters.AliceMagtroid;
-import AliceMagtroidMod.powers.InvisibleHasUsedSpellPower;
+import AliceMagtroidMod.doll.DollManager;
 import AliceMagtroidMod.relics.EyeOfYatagarasu;
 import AliceMagtroidMod.variable.HeatVariable;
 import AliceMagtroidMod.variable.TempHPVariable;
@@ -14,10 +13,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardHelper;
@@ -198,11 +195,12 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	}
 	
 	public void receivePostBattle(AbstractRoom r) {
-	
+		dollManager.clear();
+		dollManager = null;
 	}
 	
 	public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-
+		dollManager = new DollManager(AbstractDungeon.player);
 	}
 	
 	public void receiveCardUsed(AbstractCard c) {
@@ -348,6 +346,8 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		for (AbstractGameAction act : temp)
 			AbstractDungeon.actionManager.addToTop(act);
 	}
+	
+	public static DollManager dollManager;
 	
 //	public static AbstractCard getRandomReiujiCard() {
 //		return AbstractDungeon.returnTrulyRandomCardInCombat().makeCopy();

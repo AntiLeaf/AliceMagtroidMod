@@ -1,7 +1,7 @@
 package AliceMagtroidMod.cards.ReiuijiDerivation;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import AliceMagtroidMod.cards.Reiuji.UniverseSingsToMe;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import basemod.BaseMod;

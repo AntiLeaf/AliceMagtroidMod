@@ -1,8 +1,11 @@
-package AliceMagtroidMod.dolls;
+package AliceMagtroidMod.doll.dolls;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
@@ -15,18 +18,30 @@ public abstract class AbstractDoll {
 
     protected ArrayList<PowerTip> tips = new ArrayList<>(); // TODO: What is this?
 
-    public int MAX_HP = 0; // may not be used
+    public int maxHP = 0; // may not be used
     public int HP = 0;
     public int block = 0;
-    public int actAmount = 0;
+    
     public int spawnAmount = 0;
+    public int baseSpawnAmount = 0;
+    
+    public int actAmount = 0;
+    public int baseActAmount = 0;
+    
+    public boolean actAtStartOfTurn = false;
+    public boolean actAtEndOfTurn = false;
+    public boolean actWhenCommanded = false;
+    
     public int brokenAmount = 0; // may be used in the future
+    public int baseBrokenAmount = 0;
+    
+    public int extraActCount = 0;
 
     public Hitbox hb;
     protected Texture img;
     protected float fontScale;
 
-    public int shown_values[] = new int[2];
+    public int[] shown_values = new int[2];
     protected float animTimer;
 
     public AbstractDoll() {
@@ -35,22 +50,36 @@ public abstract class AbstractDoll {
 
     public abstract void updateDescription();
 
-    public abstract void onSpawn();
-
-    public abstract void onAct();
-
-    public abstract void onBroken();
-
     public static AbstractDoll getRandomDoll(boolean useCardRng) {
         // TODO
         return null;
     }
+    
+    
+    public void onSpawn() {}
+    public void atStartOfTurn() {}
 
-    public void onStartOfTurn() {}
+    public void atEndOfTurn() {}
+    
+    public void triggerWhenCommanded() {}
+    
+    public void onBroken() {}
+    
+    public void onRecycled() {}
+    
+    public void onBrokenOrRecycled() {}
+    
+    public int calcRemainingDamage(int damage) {
+        // TODO
+        return Integer.max(0, damage - this.HP - this.block);
+    }
+    
+    public void onDamageReceived(int damage) {
+        // TODO
+        // damage may be greater than HP + block
+    }
 
-    public void onEndOfTurn() {}
-
-    public void applyPowers(AbstractCreature owner) {}
+    public abstract void applyPowers();
 
     public abstract AbstractDoll makeCopy();
 
@@ -80,5 +109,13 @@ public abstract class AbstractDoll {
 
     static {
         // TODO
+    }
+    
+    void addToBot(AbstractGameAction action) {
+        AbstractDungeon.actionManager.addToBottom(action);
+    }
+    
+    void addToTop(AbstractGameAction action) {
+        AbstractDungeon.actionManager.addToTop(action);
     }
 }

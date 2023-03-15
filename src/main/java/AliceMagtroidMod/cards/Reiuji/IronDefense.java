@@ -1,7 +1,7 @@
 package AliceMagtroidMod.cards.Reiuji;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import AliceMagtroidMod.powers.IronDefensePower;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;

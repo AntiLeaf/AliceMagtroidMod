@@ -1,4 +1,4 @@
-package AliceMagtroidMod.abstracts;
+package AliceMagtroidMod.cards;
 
 import AliceMagtroidMod.AliceMagtroidMod;
 import AliceMagtroidMod.powers.InvisibleHasUsedSpellPower;

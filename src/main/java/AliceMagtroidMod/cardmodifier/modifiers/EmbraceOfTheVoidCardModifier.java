@@ -1,7 +1,7 @@
 package AliceMagtroidMod.cardmodifier.modifiers;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import AliceMagtroidMod.cardmodifier.StackableCardModifier;
 import AliceMagtroidMod.embrace.EmbraceManager;
 import AliceMagtroidMod.patches.field.EmbracedCountField;

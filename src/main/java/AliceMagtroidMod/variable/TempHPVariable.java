@@ -1,6 +1,6 @@
 package AliceMagtroidMod.variable;
 
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import basemod.abstracts.DynamicVariable;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 

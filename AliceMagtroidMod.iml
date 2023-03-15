@@ -10,10 +10,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="BaseMod" level="project" />
-    <orderEntry type="library" name="desktop-1.0" level="project" />
-    <orderEntry type="library" name="ModTheSpire" level="project" />
-    <orderEntry type="library" name="StSLib" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.megacrit.cardcrawl:slaythespire:114">
         <CLASSES>
@@ -41,6 +37,9 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: org.jetbrains:annotations:24.0.1" level="project" />
+    <orderEntry type="library" name="BaseMod" level="project" />
+    <orderEntry type="library" name="desktop-1.0" level="project" />
+    <orderEntry type="library" name="ModTheSpire" level="project" />
+    <orderEntry type="library" name="StSLib" level="project" />
   </component>
 </module>

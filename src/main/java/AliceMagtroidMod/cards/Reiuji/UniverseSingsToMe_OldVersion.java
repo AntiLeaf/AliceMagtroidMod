@@ -1,7 +1,7 @@
 package AliceMagtroidMod.cards.Reiuji;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import AliceMagtroidMod.cards.ReiuijiDerivation.*;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsInHandAction;

@@ -1,7 +1,7 @@
 package AliceMagtroidMod.cards.Reiuji;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.abstracts.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceCard;
 import AliceMagtroidMod.cardmodifier.modifiers.ExhaustHandAlternateCostCardModifier;
 import AliceMagtroidMod.cards.ReiuijiDerivation.*;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;

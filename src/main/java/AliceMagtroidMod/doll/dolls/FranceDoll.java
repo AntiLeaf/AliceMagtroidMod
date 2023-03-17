@@ -47,8 +47,7 @@ public class FranceDoll extends AbstractDoll {
 		this.block = this.spawnAmount;
 	}
 	
-	@Override
-	public void atStartOfTurn() {
+	public void act(ActTiming timing) {
 		this.applyPowers();
 		
 		this.block += this.actAmount;

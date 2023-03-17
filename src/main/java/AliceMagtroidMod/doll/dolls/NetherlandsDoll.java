@@ -57,8 +57,7 @@ public class NetherlandsDoll extends AbstractDoll {
 				new DexterityPower(AbstractDungeon.player, this.spawnAmount)));
 	}
 	
-	@Override
-	public void atStartOfTurn() {
+	public void act(ActTiming timing) {
 		this.applyPowers();
 		
 		this.addToTop(new ApplyPowerAction(

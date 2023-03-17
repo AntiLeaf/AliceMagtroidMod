@@ -42,8 +42,7 @@ public class OrleansDoll extends AbstractDoll {
 		this.addToTop(new GainBlockAction(AbstractDungeon.player, this.spawnAmount));
 	}
 	
-	@Override
-	public void atStartOfTurn() {
+	public void act(ActTiming timing) {
 		this.applyPowers();
 		
 		this.addToTop(new GainBlockAction(AbstractDungeon.player, this.actAmount));

@@ -6,48 +6,43 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-public class HouraiDoll extends AbstractDoll {
-	public static final String SIMPLE_NAME = HouraiDoll.class.getSimpleName();
+public class KyotoDoll extends AbstractDoll {
+	public static final String SIMPLE_NAME = KyotoDoll.class.getSimpleName();
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
 	
-	public static final int MAX_HP = 5;
+	public static final int MAX_HP = 4;
 	
-	HouraiDoll() {
+	public static final int HOURAI_DMG_RATE = 25;
+	
+	KyotoDoll() {
 		super();
 		
 		this.maxHP = this.HP = MAX_HP;
-		
-		this.actAmount = this.baseActAmount = 1;
 	}
 	
 	public void updateDescription() {
 		// TODO
-		this.description = "Hourai dolls can buff other kinds of dolls.\n"
-				+ "Act (when commanded): All rightmost dolls will act extra "
-				+ this.actAmount + " time(s) next time.";
 	}
 	
 	public void act(ActTiming timing) {
 		this.applyPowers();
 		
-		for (AbstractDoll doll : AliceMagtroidMod.dollManager.getRightmostDolls())
-			if (doll != null && !(doll instanceof HouraiDoll)) {
-//				doll.extraActCount += this.actAmount;
-				
-				AliceMagtroidMod.dollManager.pushActQueue(doll, ActTiming.HOURAI);
-			}
+		this.addToBot(new DrawCardAction(AbstractDungeon.player, 1));
 	}
 	
-	public void applyPowers() {}
+	public void applyPowers() {
+		// TODO
+	}
 	
 	public AbstractDoll makeCopy() {
-		return new HouraiDoll();
+		return new KyotoDoll();
 	}
 	
 	public void render(SpriteBatch sb) {

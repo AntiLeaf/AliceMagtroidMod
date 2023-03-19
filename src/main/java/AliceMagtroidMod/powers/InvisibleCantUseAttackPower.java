@@ -28,7 +28,7 @@ public class InvisibleCantUseAttackPower extends AbstractPower implements Invisi
 		this.owner = AbstractDungeon.player;
 		this.amount = -1;
 		
-		this.type = AbstractPowerEnum.NEUTRAL;
+		this.type = AbstractPowerEnum.ALICE_MAGTROID_NEUTRAL;
 		this.updateDescription();
 		this.img = new Texture("img/powers/Nineball32.png");
 //		this.img = new Texture(IMG_PATH);

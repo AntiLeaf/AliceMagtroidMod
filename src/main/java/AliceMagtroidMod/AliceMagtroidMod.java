@@ -1,6 +1,6 @@
 package AliceMagtroidMod;
 
-import AliceMagtroidMod.cards.Reiuji.*;
+import AliceMagtroidMod.cards.AliceMagtroid.*;
 import AliceMagtroidMod.characters.AliceMagtroid;
 import AliceMagtroidMod.doll.DollManager;
 import AliceMagtroidMod.relics.EyeOfYatagarasu;
@@ -92,7 +92,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		BaseMod.subscribe(this);
 		logger.info("creating the color : ALICE_COLOR and ALICE_DERIVATION_COLOR");
 		BaseMod.addColor(
-				ALICE_COLOR,
+				ALICE_MAGTROID_COLOR,
 				PUPPETEER,
 				PUPPETEER,
 				PUPPETEER,
@@ -111,7 +111,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 				CARD_ENERGY_ORB
 		);
 		BaseMod.addColor(
-				ALICE_DERIVATION_COLOR,
+				ALICE_MAGTROID_DERIVATION_COLOR,
 				PUPPETEER,
 				PUPPETEER,
 				PUPPETEER,
@@ -160,7 +160,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		logger.info("Begin editing relics.");
 		BaseMod.addRelicToCustomPool(
 				new EyeOfYatagarasu(),
-				ALICE_COLOR
+				ALICE_MAGTROID_COLOR
 		);
 		
 		logger.info("Relics editing finished.");
@@ -321,8 +321,8 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	private void loadCardsToAdd() {
 		cardsToAdd.clear();
 		
-		cardsToAdd.add(new Defend_Alice());
-		cardsToAdd.add(new Strike_Alice());
+		cardsToAdd.add(new Defend_AliceMagtroid());
+		cardsToAdd.add(new Strike_AliceMagtroid());
 		
 	}
 	

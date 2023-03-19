@@ -22,7 +22,7 @@ public class SelectSomeAndMoveAction extends AbstractGameAction {
 	private final int amount;
 	
 	public SelectSomeAndMoveAction(ArrayList<AbstractCard> cardList, CardGroup src, CardGroup dest,
-								   int amount, String text, Consumer<AbstractCard> work) {
+								   int amount, String text, Consumer<AbstractCard> consumer) {
 		this.src = src;
 		this.dest = dest;
 		this.amount = amount;
@@ -35,7 +35,7 @@ public class SelectSomeAndMoveAction extends AbstractGameAction {
 //				ThMod.logger.info("FUCK! there is a chosen card: " + card.name);
 				
 				this.selected.addToBottom(card);
-				work.accept(card);
+				consumer.accept(card);
 //				card.stopGlowing();
 			}
 			

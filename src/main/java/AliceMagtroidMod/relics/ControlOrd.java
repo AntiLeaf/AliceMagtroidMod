@@ -1,7 +1,6 @@
 package AliceMagtroidMod.relics;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.powers.HeatPower;
 import basemod.abstracts.CustomRelic;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;

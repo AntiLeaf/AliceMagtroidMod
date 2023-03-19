@@ -29,7 +29,7 @@ public class InvisibleStarryCloakPower extends AbstractPower implements Invisibl
 		this.amount = amount;
 		this.priority = 114514;
 		
-		this.type = AbstractPowerEnum.NEUTRAL;
+		this.type = AbstractPowerEnum.ALICE_MAGTROID_NEUTRAL;
 		this.updateDescription();
 		this.img = new Texture("img/powers/Nineball32.png");
 //		this.img = new Texture(IMG_PATH);

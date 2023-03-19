@@ -1,8 +1,7 @@
 package AliceMagtroidMod.embrace;
 
-import AliceMagtroidMod.cards.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceMagtroidCard;
 import AliceMagtroidMod.cardmodifier.StackableCardModifierManager;
-import AliceMagtroidMod.cardmodifier.modifiers.EmbraceOfTheVoidCardModifier;
 import AliceMagtroidMod.patches.field.EmbracedCountField;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +17,8 @@ public class EmbraceManager {
 	}
 	
 	public static int getMaxEmbrace(AbstractCard card) {
-		if (card instanceof AbstractAliceCard) {
-			AbstractAliceCard c = (AbstractAliceCard) card;
+		if (card instanceof AbstractAliceMagtroidCard) {
+			AbstractAliceMagtroidCard c = (AbstractAliceMagtroidCard) card;
 			
 			if (c.canHaveInfinityEmbrace())
 				return Integer.MAX_VALUE;
@@ -38,8 +37,8 @@ public class EmbraceManager {
 		amt = Integer.min(amt, EmbraceManager.getMaxEmbrace(card));
 		
 		if (amt > 0) {
-			if (card instanceof AbstractAliceCard)
-				amt = ((AbstractAliceCard) card).onEmbracedModifyAmount(amt);
+			if (card instanceof AbstractAliceMagtroidCard)
+				amt = ((AbstractAliceMagtroidCard) card).onEmbracedModifyAmount(amt);
 			
 			if (amt > 0)
 				StackableCardModifierManager.addModifier(

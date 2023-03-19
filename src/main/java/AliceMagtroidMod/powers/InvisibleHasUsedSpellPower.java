@@ -1,7 +1,7 @@
 package AliceMagtroidMod.powers;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.cards.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceMagtroidCard;
 import AliceMagtroidMod.patches.enums.AbstractPowerEnum;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.InvisiblePower;
@@ -23,16 +23,16 @@ public class InvisibleHasUsedSpellPower extends AbstractPower implements Invisib
 	public static final String[] DESCRIPTIONS =
 			powerStrings.DESCRIPTIONS;
 
-	public AbstractAliceCard spell;
+	public AbstractAliceMagtroidCard spell;
 
-	public InvisibleHasUsedSpellPower(AbstractAliceCard spell) {
+	public InvisibleHasUsedSpellPower(AbstractAliceMagtroidCard spell) {
 		this.name = NAME;
 		this.ID = POWER_ID;
 		this.owner = AbstractDungeon.player;
 		this.amount = -1;
 		this.spell = spell;
 		
-		this.type = AbstractPowerEnum.NEUTRAL;
+		this.type = AbstractPowerEnum.ALICE_MAGTROID_NEUTRAL;
 		this.updateDescription();
 		this.img = new Texture("img/powers/Nineball32.png");
 //		this.img = new Texture(IMG_PATH);
@@ -46,8 +46,8 @@ public class InvisibleHasUsedSpellPower extends AbstractPower implements Invisib
 
 	@Override
 	public boolean canPlayCard(AbstractCard c) {
-		if (c instanceof AbstractAliceCard) {
-			AbstractAliceCard card = (AbstractAliceCard) c;
+		if (c instanceof AbstractAliceMagtroidCard) {
+			AbstractAliceMagtroidCard card = (AbstractAliceMagtroidCard) c;
 
 			return !(card.isSpellCard && card != this.spell);
 		}

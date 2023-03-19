@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AnonymousAction extends AbstractGameAction {
-	ArrayList<Runnable> runnables;
+	ArrayList<Runnable> runnableList;
 	
-	public AnonymousAction(Runnable... runnables) {
+	public AnonymousAction(Runnable... runnableList) {
 		this.actionType = ActionType.SPECIAL;
 		
-		this.runnables = new ArrayList<>();
-		this.runnables.addAll(Arrays.asList(runnables));
+		this.runnableList = new ArrayList<>();
+		this.runnableList.addAll(Arrays.asList(runnableList));
 	}
 	
 	public void update() {
 		if (!this.isDone) {
-			for (Runnable o : this.runnables)
+			for (Runnable o : this.runnableList)
 				if (o != null)
 					o.run();
 			

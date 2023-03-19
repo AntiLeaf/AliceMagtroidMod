@@ -1,7 +1,6 @@
 package AliceMagtroidMod.powers;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.action.AddEmbraceAction;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;

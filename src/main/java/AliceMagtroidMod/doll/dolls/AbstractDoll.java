@@ -4,8 +4,6 @@ import AliceMagtroidMod.AliceMagtroidMod;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.PowerTip;
@@ -171,11 +169,11 @@ public abstract class AbstractDoll {
 		AbstractDungeon.actionManager.addToTop(action);
 	}
 	
-	public enum SpawnPosition {
+	public enum Position {
 		RIGHTMOST,
 		LEFTMOST,
 		MANUAL,
-		NOT_SPECIFIED
+		UNSPECIFIED
 	}
 	
 	public enum ActTiming {

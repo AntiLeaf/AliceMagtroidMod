@@ -1,8 +1,8 @@
 package AliceMagtroidMod.characters;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.cards.Reiuji.Defend_Alice;
-import AliceMagtroidMod.cards.Reiuji.Strike_Alice;
+import AliceMagtroidMod.cards.AliceMagtroid.Defend_AliceMagtroid;
+import AliceMagtroidMod.cards.AliceMagtroid.Strike_AliceMagtroid;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import AliceMagtroidMod.patches.AliceMagtroidModClassEnum;
 import AliceMagtroidMod.relics.EyeOfYatagarasu;
@@ -93,9 +93,9 @@ public class AliceMagtroid extends CustomPlayer {
 		ArrayList<String> ret = new ArrayList<>();
 		
 		for (int i = 0; i < 4; i++)
-			ret.add(Strike_Alice.ID);
+			ret.add(Strike_AliceMagtroid.ID);
 		for (int i = 0; i < 4; i++)
-			ret.add(Defend_Alice.ID);
+			ret.add(Defend_AliceMagtroid.ID);
 		
 //		ret.add("IcicleShot");
 //		ret.add("ShowOff");
@@ -142,11 +142,11 @@ public class AliceMagtroid extends CustomPlayer {
 	}
 	
 	public AbstractCard.CardColor getCardColor() {
-		return AbstractCardEnum.ALICE_COLOR;
+		return AbstractCardEnum.ALICE_MAGTROID_COLOR;
 	}
 	
 	public AbstractCard getStartCardForEvent() {
-		return new Strike_Alice();
+		return new Strike_AliceMagtroid();
 	}
 	
 	public String getTitle(PlayerClass playerClass) {

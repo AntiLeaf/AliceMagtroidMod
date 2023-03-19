@@ -1,6 +1,6 @@
 package AliceMagtroidMod.variable;
 
-import AliceMagtroidMod.cards.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceMagtroidCard;
 import basemod.abstracts.DynamicVariable;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 
@@ -12,10 +12,10 @@ public class HeatVariable extends DynamicVariable {
 
 		@Override
 		public boolean isModified(AbstractCard c) {
-			if (!(c instanceof AbstractAliceCard))
+			if (!(c instanceof AbstractAliceMagtroidCard))
 				return false;
 
-			AbstractAliceCard card = (AbstractAliceCard) c;
+			AbstractAliceMagtroidCard card = (AbstractAliceMagtroidCard) c;
 			return card.heat == card.baseHeat;
 		}
 
@@ -27,14 +27,14 @@ public class HeatVariable extends DynamicVariable {
 
 		@Override
 		public int value(AbstractCard card) {
-			return (card instanceof AbstractAliceCard) ?
-					((AbstractAliceCard) card).heat : 0;
+			return (card instanceof AbstractAliceMagtroidCard) ?
+					((AbstractAliceMagtroidCard) card).heat : 0;
 		}
 
 		@Override
 		public int baseValue(AbstractCard card) {
-			return (card instanceof AbstractAliceCard) ?
-					((AbstractAliceCard) card).baseHeat : 0;
+			return (card instanceof AbstractAliceMagtroidCard) ?
+					((AbstractAliceMagtroidCard) card).baseHeat : 0;
 		}
 
 		@Override

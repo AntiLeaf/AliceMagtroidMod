@@ -1,7 +1,7 @@
 package AliceMagtroidMod.powers;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.cards.ReiuijiDerivation.Spark;
+import AliceMagtroidMod.cards.AliceMagtroidDerivation.Spark;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;

@@ -1,7 +1,7 @@
 package AliceMagtroidMod.relics;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.cards.AbstractAliceCard;
+import AliceMagtroidMod.cards.AbstractAliceMagtroidCard;
 import AliceMagtroidMod.powers.InvisibleStarryCloakPower;
 import basemod.abstracts.CustomRelic;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -54,8 +54,8 @@ public class StarryCloak extends CustomRelic {
 		
 		if (targetCard.block > 0)
 			flag = true;
-		else if (targetCard instanceof AbstractAliceCard) {
-			AbstractAliceCard card = (AbstractAliceCard) targetCard;
+		else if (targetCard instanceof AbstractAliceMagtroidCard) {
+			AbstractAliceMagtroidCard card = (AbstractAliceMagtroidCard) targetCard;
 			
 			if (card.heat > 0 || card.tempHP > 0)
 				flag = true;

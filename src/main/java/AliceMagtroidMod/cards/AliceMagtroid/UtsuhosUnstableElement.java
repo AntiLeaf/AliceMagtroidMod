@@ -2,7 +2,7 @@ package AliceMagtroidMod.cards.AliceMagtroid;
 
 import AliceMagtroidMod.AliceMagtroidMod;
 import AliceMagtroidMod.cards.AbstractAliceMagtroidCard;
-import AliceMagtroidMod.action.AnonymousAction;
+import AliceMagtroidMod.action.common.AnonymousAction;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;

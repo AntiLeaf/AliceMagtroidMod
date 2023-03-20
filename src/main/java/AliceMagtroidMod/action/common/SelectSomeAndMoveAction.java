@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package AliceMagtroidMod.action;
+package AliceMagtroidMod.action.common;
 
 import AliceMagtroidMod.AliceMagtroidMod;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.MoveCardsAction;

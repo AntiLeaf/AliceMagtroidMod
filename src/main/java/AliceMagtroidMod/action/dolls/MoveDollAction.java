@@ -3,27 +3,30 @@
 // (powered by FernFlower decompiler)
 //
 
-package AliceMagtroidMod.action;
+package AliceMagtroidMod.action.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
 import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.patches.enums.ActionTypeEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 
-public class ActDollAction extends AbstractGameAction {
+public class MoveDollAction extends AbstractGameAction {
 	AbstractDoll doll;
-	AbstractDoll.ActTiming timing;
+	AbstractDoll.Position position;
+	int row, col;
 	
-	public ActDollAction(AbstractDoll doll, AbstractDoll.ActTiming timing) {
-		this.actionType = ActionTypeEnum.DOLL;
+	public MoveDollAction(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
+		this.actionType = ActionTypeEnum.DOLL_OPERATE;
 		
 		this.doll = doll;
-		this.timing = timing;
+		this.position = position;
+		this.row = row;
+		this.col = col;
 	}
 	
 	public void update() {
 		if (!this.isDone) {
-			AliceMagtroidMod.dollManager.act(this.doll, this.timing);
+			AliceMagtroidMod.dollManager.move(this.doll, this.position, this.row, this.col);
 			
 			this.isDone = true;
 		}

@@ -1,10 +1,16 @@
 package AliceMagtroidMod.doll;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.action.dolls.WaitDollsToMoveAction;
 import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.doll.dolls.HouraiDoll;
+import com.badlogic.gdx.math.MathUtils;
+import com.esotericsoftware.spine.Slot;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
+import java.lang.reflect.Array;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +26,8 @@ public class DollManager {
 	public int rowCount = 1;
 	public ArrayList<ArrayList<AbstractDoll>> dolls = new ArrayList<>();
 	
-	private ArrayDeque<SpawnInfo> spawnQueue;
-	private ArrayDeque<ActInfo> actQueue;
+//	private ArrayDeque<SpawnInfo> spawnQueue;
+//	private ArrayDeque<ActInfo> actQueue;
 	
 	int hourai_count = 0;
 	
@@ -39,8 +45,6 @@ public class DollManager {
 		this.rowCount = 1;
 		this.dolls = new ArrayList<>();
 		this.dolls.add(new ArrayList<>());
-		this.spawnQueue = new ArrayDeque<>();
-		this.actQueue = new ArrayDeque<>();
 		
 		this.hourai_count = 0;
 	}
@@ -53,48 +57,11 @@ public class DollManager {
 		this.dolls.clear();
 		this.dolls = null;
 		
-		this.spawnQueue.clear();
-		this.spawnQueue = null;
-		
-		this.actQueue.clear();
-		this.actQueue = null;
-		
 		this.hourai_count = -1; // I don't know if it is needed
 	}
 	
-	private void handleSpawnDoll(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
-		if (row >= dolls.size()) {
-			// This should not be permitted. Report this issue.
-			AliceMagtroidMod.logger.error("DollManager.spawnDoll: row >= dolls.size()");
-			return;
-		}
-		
-		if (col >= MAX_ROW_SIZE) {
-			// This should not be permitted too. Report this issue.
-			AliceMagtroidMod.logger.error("DollManager.spawnDoll: col > MAX_ROW_SIZE");
-			return;
-		}
-		
-		ArrayList<AbstractDoll> vec = dolls.get(row);
-		if (vec.size() == MAX_ROW_SIZE) {
-			AbstractDoll leftmost = vec.get(vec.size() - 1);
-			leftmost.onRecycled();
-			leftmost.onBrokenOrRecycled();
-			
-			vec.remove(vec.size() - 1);
-			// Then the doll should be already removed
-		}
-		
-		doll.onSpawn();
-		
-		if (position == AbstractDoll.Position.LEFTMOST) {
-			vec.add(0, doll);
-		} else if (position == AbstractDoll.Position.RIGHTMOST ||
-				position == AbstractDoll.Position.UNSPECIFIED) {
-			vec.add(doll);
-		} else if (position == AbstractDoll.Position.MANUAL) {
-			vec.add(col, doll);
-		}
+	public boolean isRowFull(int row) {
+		return dolls.get(row).size() >= MAX_ROW_SIZE;
 	}
 	
 	public int getHouraiCount() {
@@ -103,6 +70,18 @@ public class DollManager {
 				.filter(doll -> (doll instanceof HouraiDoll))
 				.count();
 		// TODO: may be optimized later
+	}
+	
+	public AbstractDoll getDoll(int row, int col) {
+		return dolls.get(row).get(col);
+	}
+	
+	public AbstractDoll getLeftmostDoll(int row) {
+		return dolls.get(row).get(dolls.get(row).size() - 1);
+	}
+	
+	public AbstractDoll getRightmostDoll(int row) {
+		return dolls.get(row).get(0);
 	}
 	
 	public ArrayList<AbstractDoll> getRightmostDolls() {
@@ -158,61 +137,126 @@ public class DollManager {
 			doll.act(AbstractDoll.ActTiming.END_OF_TURN);
 	}
 	
-	public void pushSpawnQueue(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
-		if ((position == AbstractDoll.Position.UNSPECIFIED) == (col == -1))
-			AliceMagtroidMod.logger.error("DollManager.pushSpawnQueue: position and col are not consistent");
+	public void reserveForSpawn(int row, int col) {
+		dolls.get(row).add(null);
 		
-		spawnQueue.addLast(new SpawnInfo(doll, position, row, col));
+		for (int i = dolls.get(row).size() - 1; i >= col; i--)
+			this.move(dolls.get(row).get(i), AbstractDoll.Position.MANUAL, row, i + 1);
+		
+		// the action should be added outside this function
 	}
 	
-	public void pushSpawnQueue(AbstractDoll doll, AbstractDoll.Position position, int row) {
-		this.pushSpawnQueue(doll, position, row, -1);
+	public void updateMovingDolls(AbstractGameAction action, float time) {
+		for (AbstractDoll doll : this.getSpecificDolls(doll -> doll.source[0] != -1))
+			doll.updateWhileMoving(action, time);
 	}
 	
-	public void clearSpawnQueue() {
-		while (!spawnQueue.isEmpty()) {
-			SpawnInfo info = spawnQueue.pollFirst();
-			this.handleSpawnDoll(info.doll, info.position, info.row, info.col);
+	public void resetAllSourceAndDest() {
+		for (AbstractDoll doll : this.getAllDolls())
+			doll.resetSourceAndDest();
+	}
+	
+	public void removeEmptyEnds() {
+		for (ArrayList<AbstractDoll> row : dolls) {
+			while (row.size() > 0 && row.get(row.size() - 1) == null)
+				row.remove(row.size() - 1);
 		}
 	}
 	
 	public void spawn(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
-		this.pushSpawnQueue(doll, position, row, col);
-		this.clearSpawnQueue();
-	}
-	
-	public void spawn(AbstractDoll doll, AbstractDoll.Position position, int row) {
-		this.pushSpawnQueue(doll, position, row);
-		this.clearSpawnQueue();
-	}
-	
-	public void pushActQueue(AbstractDoll doll, AbstractDoll.ActTiming timing) {
-		actQueue.addLast(new ActInfo(doll, timing));
-	}
-	
-	public void clearActQueue() {
-		while (!actQueue.isEmpty()) {
-			ActInfo info = actQueue.pollFirst();
-			info.doll.act(info.timing);
+		// If position == MANUAL then assert the position is valid and = null
+		if (position == AbstractDoll.Position.MANUAL) {
+			if (this.dolls.get(row).get(col) != null) {
+				AliceMagtroidMod.logger.error("DollManager.spawn: position is not empty");
+				return;
+			}
+			
+			this.dolls.get(row).set(col, doll);
+		}
+		else if (position == AbstractDoll.Position.LEFTMOST) {
+			if (this.isRowFull(row)) {
+				AliceMagtroidMod.logger.error("DollManager.spawn: row is full");
+				return;
+			}
+			
+			this.dolls.get(row).add(doll);
+		}
+		else if (position == AbstractDoll.Position.RIGHTMOST ||
+				position == AbstractDoll.Position.UNSPECIFIED) {
+			if (this.isRowFull(row)) {
+				AliceMagtroidMod.logger.error("DollManager.spawn: row is full");
+				return;
+			}
+			
+			this.dolls.get(row).add(0, doll);
 		}
 	}
 	
-	public void act(AbstractDoll doll, AbstractDoll.ActTiming timing) {
-		this.pushActQueue(doll, timing);
-		this.clearActQueue();
+	public void spawn(AbstractDoll doll, AbstractDoll.Position position, int row) {
+		this.spawn(doll, position, row, -1);
 	}
 	
+	// Without waiting
 	public void move(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
-		int[] rowAndCol = this.getRowAndCol(doll);
-		if (rowAndCol[0] == -1) {
+		int[] source = doll.getRowAndCol();
+		
+		if (source[0] == -1) {
 			AliceMagtroidMod.logger.error("DollManager.move: doll not found");
 			return;
 		}
 		
-		this.dolls.get(rowAndCol[0]).remove(rowAndCol[1]);
-		this.dolls.get(row).add(col, doll);
+		if (source[0] == row && source[1] == col) {
+			AliceMagtroidMod.logger.warn("DollManager.move: doll already at the position");
+			return;
+		}
 		
-		// TODO: maybe more things to do
+		// Without checking if the position is valid
+		this.dolls.get(source[0]).set(source[1], null);
+		this.dolls.get(row).set(col, doll);
+		
+		doll.setSource(source[0], source[1]);
+		doll.setDest(row, col);
+	}
+	
+	public void recycleDoll(AbstractDoll doll) {
+		int[] rowAndCol = this.getRowAndCol(doll);
+		int row = rowAndCol[0], col = rowAndCol[1];
+		if (row == -1) {
+			AliceMagtroidMod.logger.error("DollManager.recycleDoll: doll not found");
+			return;
+		}
+		
+		doll.onRecycled();
+		doll.onBrokenOrRecycled();
+		
+		boolean needToWaitMove = false;
+		if (col != dolls.get(row).size() - 1) {
+			needToWaitMove = true;
+			for (int i = col + 1; i < dolls.get(row).size(); i++) {
+				AbstractDoll dollToMove = dolls.get(row).get(i);
+				
+				dollToMove.setDest(row, i - 1);
+			}
+		}
+		
+		dolls.get(row).remove(col);
+		
+		if (needToWaitMove) {
+			this.addToTop(new WaitDollsToMoveAction());
+		}
+	}
+	
+	public void addToBot(AbstractGameAction action) {
+		AbstractDungeon.actionManager.addToBottom(action);
+	}
+	
+	public void addToTop(AbstractGameAction action) {
+		AbstractDungeon.actionManager.addToTop(action);
+	}
+	
+	public void addActionsToTop(AbstractGameAction... actions) {
+		for (int i = actions.length - 1; i >= 0; i--)
+			this.addToTop(actions[i]);
 	}
 	
 	public static class SpawnInfo {
@@ -240,5 +284,13 @@ public class DollManager {
 			this.doll = doll;
 			this.timing = timing;
 		}
+	}
+	
+	public float getMovingScale(float x) { // by default total = 1F
+		return MathUtils.cos(x * MathUtils.PI);
+	}
+	
+	public float getMovingScale(float x, float total) {
+		return this.getMovingScale(x / total);
 	}
 }

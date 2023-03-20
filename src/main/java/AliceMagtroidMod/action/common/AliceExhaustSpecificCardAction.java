@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package AliceMagtroidMod.action;
+package AliceMagtroidMod.action.common;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;

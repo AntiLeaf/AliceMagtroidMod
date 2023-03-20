@@ -1,6 +1,8 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.action.dolls.act.DollActAction;
+import AliceMagtroidMod.action.dolls.spawn.DollSpawnAction;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -45,8 +47,12 @@ public abstract class AbstractDoll {
 	public int[] shown_values = new int[2];
 	protected float animTimer;
 	
+	public int[] source, dest;
+	
 	public AbstractDoll() {
 		// TODO
+		source = new int[]{-1, -1};
+		dest = new int[]{-1, -1};
 	}
 	
 	public abstract void updateDescription();
@@ -60,38 +66,6 @@ public abstract class AbstractDoll {
 			LondonDoll.class,
 			KyotoDoll.class
 	};
-	
-	public static AbstractDoll getRandomDoll(Random rng) {
-		Class<?> c = dollClasses[rng.random(dollClasses.length - 1)];
-		try {
-			return (AbstractDoll) c.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static AbstractDoll getRandomDoll() {
-		return getRandomDoll(AbstractDungeon.cardRandomRng);
-	}
-	
-	public static AbstractDoll getRandomDollExceptLondon(Random rng) {
-		int k = rng.random(dollClasses.length - 2);
-		if (dollClasses[k] == LondonDoll.class)
-			k++;
-		
-		Class<?> c = dollClasses[k];
-		try {
-			return (AbstractDoll) c.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static AbstractDoll getRandomDollExceptLondon() {
-		return getRandomDollExceptLondon(AbstractDungeon.cardRandomRng);
-	}
 	
 	public abstract void act(ActTiming timing);
 	
@@ -145,6 +119,20 @@ public abstract class AbstractDoll {
 	
 	public abstract void playSFX();
 	
+	abstract public boolean shouldCancelAct(AbstractGameAction action);
+	
+	abstract public void updateWhileSpawn(DollSpawnAction action, float time);
+	
+	abstract public void updateWhileAct(DollActAction action, float time);
+	
+	abstract public void updateWhileBroken(AbstractGameAction action, float time);
+	
+	abstract public void updateWhileRecycled(AbstractGameAction action, float time);
+	
+	public void updateWhileMoving(AbstractGameAction action, float time) {
+		// TODO
+	}
+	
 	static {
 		// TODO
 	}
@@ -159,6 +147,33 @@ public abstract class AbstractDoll {
 	
 	public int[] getRowAndCol() {
 		return AliceMagtroidMod.dollManager.getRowAndCol(this);
+	}
+	
+	public void setSource(int[] rowAndCol) {
+		source[0] = rowAndCol[0];
+		source[1] = rowAndCol[1];
+	}
+	
+	public void setSource(int row, int col) {
+		source[0] = row;
+		source[1] = col;
+	}
+	
+	public void setDest(int[] rowAndCol) {
+		dest[0] = rowAndCol[0];
+		dest[1] = rowAndCol[1];
+	}
+	
+	public void setDest(int row, int col) {
+		dest[0] = row;
+		dest[1] = col;
+	}
+	
+	public void resetSourceAndDest() {
+		source[0] = -1;
+		source[1] = -1;
+		dest[0] = -1;
+		dest[1] = -1;
 	}
 	
 	void addToBot(AbstractGameAction action) {
@@ -182,5 +197,37 @@ public abstract class AbstractDoll {
 		END_OF_TURN,
 		COMMANDED,
 		HOURAI
+	}
+	
+	public static AbstractDoll getRandomDoll(Random rng) {
+		Class<?> c = dollClasses[rng.random(dollClasses.length - 1)];
+		try {
+			return (AbstractDoll) c.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static AbstractDoll getRandomDoll() {
+		return getRandomDoll(AbstractDungeon.cardRandomRng);
+	}
+	
+	public static AbstractDoll getRandomDollExceptLondon(Random rng) {
+		int k = rng.random(dollClasses.length - 2);
+		if (dollClasses[k] == LondonDoll.class)
+			k++;
+		
+		Class<?> c = dollClasses[k];
+		try {
+			return (AbstractDoll) c.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static AbstractDoll getRandomDollExceptLondon() {
+		return getRandomDollExceptLondon(AbstractDungeon.cardRandomRng);
 	}
 }

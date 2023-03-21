@@ -4,6 +4,7 @@ import AliceMagtroidMod.AliceMagtroidMod;
 import AliceMagtroidMod.action.dolls.WaitDollsToMoveAction;
 import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.doll.dolls.HouraiDoll;
+import AliceMagtroidMod.doll.dolls.KyotoDoll;
 import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.Slot;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -102,6 +103,17 @@ public class DollManager {
 				.filter(predicate)
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
+
+	public int countSpecificDolls(Predicate<AbstractDoll> predicate) {
+		return (int) dolls.stream()
+				.flatMap(List::stream)
+				.filter(predicate)
+				.count();
+	}
+
+	public int countSpecificDolls(Class<?> dollClass) {
+		return this.countSpecificDolls(doll -> doll.getClass() == dollClass);
+	}
 	
 	public int getRow(AbstractDoll doll) {
 		for (int i = 0; i < dolls.size(); i++)
@@ -125,6 +137,17 @@ public class DollManager {
 				return new int[]{i, dolls.get(i).indexOf(doll)};
 		
 		return new int[]{-1, -1};
+	}
+
+	public void clearBlockOnPlayerTurnStart() {
+		int kyoto_count = this.countSpecificDolls(KyotoDoll.class);
+		int max_preserved_block = kyoto_count * KyotoDoll.BLOCK_PRESERVED;
+
+		for (AbstractDoll doll : this.getAllDolls())
+			if (doll.block > max_preserved_block)
+				doll.block = max_preserved_block;
+
+		this.applyPowersForAllDolls();
 	}
 	
 	public void atStartOfTurn() {
@@ -161,6 +184,11 @@ public class DollManager {
 			while (row.size() > 0 && row.get(row.size() - 1) == null)
 				row.remove(row.size() - 1);
 		}
+	}
+
+	public void applyPowersForAllDolls() {
+		for (AbstractDoll doll : this.getAllDolls())
+			doll.applyPowers();
 	}
 	
 	public void spawn(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
@@ -244,6 +272,30 @@ public class DollManager {
 		if (needToWaitMove) {
 			this.addToTop(new WaitDollsToMoveAction());
 		}
+	}
+
+	public int calcDamageOnPlayer(int damage) {
+		int res = damage / this.rowCount, reminder = damage % this.rowCount;
+
+		int totalToPlayer = 0;
+		for (int i = 0; i < this.rowCount; i++) {
+			int dmg = res + (i < reminder ? 1 : 0);
+			ArrayList<AbstractDoll> dollsInRow = dolls.get(i);
+
+			for (AbstractDoll doll : dollsInRow) {
+				if (dmg == 0)
+					break;
+				dmg = doll.calcRemainingDamage(dmg);
+			}
+
+			totalToPlayer += dmg;
+		}
+
+		return totalToPlayer;
+	}
+
+	public void receiveDamage(int damage) {
+
 	}
 	
 	public void addToBot(AbstractGameAction action) {

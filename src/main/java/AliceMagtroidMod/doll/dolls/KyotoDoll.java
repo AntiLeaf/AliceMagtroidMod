@@ -18,6 +18,8 @@ public class KyotoDoll extends AbstractDoll {
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
 	
 	public static final int MAX_HP = 4;
+
+	public static final int BLOCK_PRESERVED = 8;
 	
 	public static final int HOURAI_DMG_RATE = 25;
 	

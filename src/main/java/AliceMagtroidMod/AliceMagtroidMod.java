@@ -1,5 +1,6 @@
 package AliceMagtroidMod;
 
+import AliceMagtroidMod.action.dolls.DollsClearBlockOnPlayerTurnStartAction;
 import AliceMagtroidMod.cards.AliceMagtroid.*;
 import AliceMagtroidMod.characters.AliceMagtroid;
 import AliceMagtroidMod.doll.DollManager;
@@ -48,7 +49,8 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		OnPlayerLoseBlockSubscriber,
 		OnPlayerDamagedSubscriber,
 		OnStartBattleSubscriber,
-		OnPlayerTurnStartSubscriber {
+		OnPlayerTurnStartSubscriber,
+		PostPlayerUpdateSubscriber {
 	public static final String SIMPLE_NAME = AliceMagtroidMod.class.getSimpleName();
 	
 	public static final Logger logger = LogManager.getLogger(AliceMagtroidMod.class.getName());
@@ -226,7 +228,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	}
 	
 	public int receiveOnPlayerDamaged(int amount, DamageInfo damageInfo) {
-		return amount; //
+		return amount; // TODO
 	}
 	
 	public int receiveOnPlayerLoseBlock(int amount) {
@@ -320,9 +322,16 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	}
 
 	public void receiveOnPlayerTurnStart() {
-
+		AbstractDungeon.actionManager.addToTop(
+				new DollsClearBlockOnPlayerTurnStartAction());
 	}
-	
+
+	public void receivePostPlayerUpdate() {
+		if (dollManager != null)
+			dollManager.applyPowersForAllDolls();
+	}
+
+
 	private void loadCardsToAdd() {
 		cardsToAdd.clear();
 		
@@ -335,7 +344,6 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		BaseMod.addDynamicVariable(new HeatVariable());
 		BaseMod.addDynamicVariable(new TempHPVariable());
 	}
-
 
 	static class Keywords {
 		

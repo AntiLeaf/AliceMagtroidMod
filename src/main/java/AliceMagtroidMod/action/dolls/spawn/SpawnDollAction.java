@@ -12,12 +12,12 @@ import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.patches.enums.ActionTypeEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 
-public class DollSpawnAction extends AbstractGameAction {
+public class SpawnDollAction extends AbstractGameAction {
 	AbstractDoll doll;
 	AbstractDoll.Position position;
 	int row, col;
 	
-	public DollSpawnAction(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
+	public SpawnDollAction(AbstractDoll doll, AbstractDoll.Position position, int row, int col) {
 		this.actionType = ActionTypeEnum.DOLL_OPERATE;
 		
 		this.doll = doll;
@@ -26,7 +26,7 @@ public class DollSpawnAction extends AbstractGameAction {
 		this.col = col;
 	}
 	
-	public DollSpawnAction(AbstractDoll doll, AbstractDoll.Position position, int row) {
+	public SpawnDollAction(AbstractDoll doll, AbstractDoll.Position position, int row) {
 		this(doll, position, row, -1);
 	}
 	
@@ -38,7 +38,7 @@ public class DollSpawnAction extends AbstractGameAction {
 				AliceMagtroidMod.addActionsToTop(
 						new RecycleDollAction(
 								AliceMagtroidMod.dollManager.getLeftmostDoll(this.row)),
-						new DollSpawnAction(this.doll, this.position, this.row, this.col)
+						new SpawnDollAction(this.doll, this.position, this.row, this.col)
 				);
 				
 				this.isDone = true;
@@ -48,7 +48,7 @@ public class DollSpawnAction extends AbstractGameAction {
 				AliceMagtroidMod.dollManager.reserveForSpawn(this.row, this.col);
 				AliceMagtroidMod.addActionsToTop(
 						new WaitDollsToMoveAction(),
-						new DollSpawnAction(this.doll, this.position, this.row, this.col)
+						new SpawnDollAction(this.doll, this.position, this.row, this.col)
 				);
 				
 				this.isDone = true;

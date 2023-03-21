@@ -47,7 +47,8 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		PostEnergyRechargeSubscriber,
 		OnPlayerLoseBlockSubscriber,
 		OnPlayerDamagedSubscriber,
-		OnStartBattleSubscriber {
+		OnStartBattleSubscriber,
+		OnPlayerTurnStartSubscriber {
 	public static final String SIMPLE_NAME = AliceMagtroidMod.class.getSimpleName();
 	
 	public static final Logger logger = LogManager.getLogger(AliceMagtroidMod.class.getName());
@@ -317,6 +318,10 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	public void receivePostInitialize() {
 		// Nothing
 	}
+
+	public void receiveOnPlayerTurnStart() {
+
+	}
 	
 	private void loadCardsToAdd() {
 		cardsToAdd.clear();
@@ -330,8 +335,8 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		BaseMod.addDynamicVariable(new HeatVariable());
 		BaseMod.addDynamicVariable(new TempHPVariable());
 	}
-	
-	
+
+
 	static class Keywords {
 		
 		Keyword[] keywords;

@@ -2,7 +2,7 @@ package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
 import AliceMagtroidMod.action.dolls.act.DollActAction;
-import AliceMagtroidMod.action.dolls.spawn.DollSpawnAction;
+import AliceMagtroidMod.action.dolls.spawn.SpawnDollAction;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -121,7 +121,7 @@ public abstract class AbstractDoll {
 	
 	abstract public boolean shouldCancelAct(AbstractGameAction action);
 	
-	abstract public void updateWhileSpawn(DollSpawnAction action, float time);
+	abstract public void updateWhileSpawn(SpawnDollAction action, float time);
 	
 	abstract public void updateWhileAct(DollActAction action, float time);
 	
@@ -189,6 +189,18 @@ public abstract class AbstractDoll {
 		LEFTMOST,
 		MANUAL,
 		UNSPECIFIED
+	}
+
+	static public class MoveDestination {
+		public Position position;
+		public int row;
+		public int col;
+
+		public MoveDestination(Position position, int row, int col) {
+			this.position = position;
+			this.row = row;
+			this.col = col;
+		}
 	}
 	
 	public enum ActTiming {

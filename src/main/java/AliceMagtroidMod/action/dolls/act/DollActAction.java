@@ -29,8 +29,6 @@ public class DollActAction extends AbstractGameAction {
 		if (this.shouldCancelAction() || this.doll.shouldCancelAct(this))
 			this.isDone = true;
 		else {
-			// TODO ?
-			
 			this.doll.updateWhileAct(this, DEFAULT_DURATION - this.duration);
 			
 			this.tickDuration();

@@ -1,6 +1,7 @@
 package AliceMagtroidMod;
 
 import AliceMagtroidMod.action.dolls.DollsClearBlockOnPlayerTurnStartAction;
+import AliceMagtroidMod.action.dolls.DollsTakeDamageAction;
 import AliceMagtroidMod.cards.AliceMagtroid.*;
 import AliceMagtroidMod.characters.AliceMagtroid;
 import AliceMagtroidMod.doll.DollManager;
@@ -193,48 +194,6 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		new AliceMagtroidMod();
 	}
 	
-	public void receivePostExhaust(AbstractCard c) {
-		// Auto-generated method stub
-	}
-	
-	public void receivePostBattle(AbstractRoom r) {
-		dollManager.clear();
-		dollManager = null;
-	}
-	
-	public void receiveOnBattleStart(AbstractRoom abstractRoom) {
-		dollManager = new DollManager(AbstractDungeon.player);
-	}
-	
-	public void receiveCardUsed(AbstractCard c) {
-		// TODO: May need to add some code here
-	}
-	
-	public void receivePostEnergyRecharge() {
-	
-	}
-	
-	public void receivePowersModified() {
-		// Auto-generated method stub
-		
-	}
-	
-	public void receivePostDungeonInitialize() {
-		// Auto-generated method stub
-	}
-	
-	public void receivePostDraw(AbstractCard arg0) {
-		// Auto-generated method stub
-	}
-	
-	public int receiveOnPlayerDamaged(int amount, DamageInfo damageInfo) {
-		return amount; // TODO
-	}
-	
-	public int receiveOnPlayerLoseBlock(int amount) {
-		return amount;
-	}
-	
 	private static String loadJson(String jsonPath) {
 		return Gdx.files.internal(jsonPath).readString(String.valueOf(StandardCharsets.UTF_8));
 	}
@@ -317,6 +276,40 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		logger.info("done editing strings");
 	}
 	
+	public void receivePostExhaust(AbstractCard c) {
+		// Auto-generated method stub
+	}
+	
+	public void receivePostBattle(AbstractRoom r) {
+		dollManager.clear();
+		dollManager = null;
+	}
+	
+	public void receiveOnBattleStart(AbstractRoom abstractRoom) {
+		dollManager = new DollManager(AbstractDungeon.player);
+	}
+	
+	public void receiveCardUsed(AbstractCard c) {
+		// TODO: May need to add some code here
+	}
+	
+	public void receivePostEnergyRecharge() {
+	
+	}
+	
+	public void receivePowersModified() {
+		// Auto-generated method stub
+		
+	}
+	
+	public void receivePostDungeonInitialize() {
+		// Auto-generated method stub
+	}
+	
+	public void receivePostDraw(AbstractCard arg0) {
+		// Auto-generated method stub
+	}
+	
 	public void receivePostInitialize() {
 		// Nothing
 	}
@@ -329,6 +322,29 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	public void receivePostPlayerUpdate() {
 		if (dollManager != null)
 			dollManager.applyPowersForAllDolls();
+	}
+	
+	public int receiveOnPlayerDamaged(int amount, DamageInfo damageInfo) {
+		if (damageInfo.type == DamageInfo.DamageType.HP_LOSS)
+			return amount;
+		
+		int new_amt = dollManager.calcDamageOnPlayer(amount);
+		if (new_amt != amount) {
+			AbstractDungeon.actionManager.addToTop(
+					new DollsTakeDamageAction(dollManager.calcDamageOnDolls(amount)));
+		}
+		
+		return new_amt;
+	}
+	
+	public int receiveOnPlayerLoseBlock(int amount) {
+		if (dollManager != null) {
+			int preserved = dollManager.getMaxBlockPreserved();
+			
+			return Integer.min(amount - preserved, 0);
+		}
+		else
+			return amount;
 	}
 
 

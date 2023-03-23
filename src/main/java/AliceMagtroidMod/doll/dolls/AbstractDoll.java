@@ -84,7 +84,7 @@ public abstract class AbstractDoll {
 		return Integer.max(0, damage - this.HP - this.block);
 	}
 	
-	public boolean onDamageReceived(int damage) {
+	public boolean takeDamage(int damage) {
 		// TODO
 		// damage may be greater than HP + block
 		// returns true if the doll is broken after taking damage

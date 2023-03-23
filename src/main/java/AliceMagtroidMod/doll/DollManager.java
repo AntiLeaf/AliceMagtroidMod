@@ -6,16 +6,15 @@ import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.doll.dolls.HouraiDoll;
 import AliceMagtroidMod.doll.dolls.KyotoDoll;
 import com.badlogic.gdx.math.MathUtils;
-import com.esotericsoftware.spine.Slot;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import java.lang.reflect.Array;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -37,9 +36,13 @@ public class DollManager {
 		this.dolls.add(new ArrayList<>());
 	}
 	
-	public float[] getPosition(int row, int col) {
-		// TODO
-		return new float[2];
+	public float[] calcLeftTopPosition(int row, int col) {
+		float[] position = new float[2];
+		
+		position[0] = owner.drawX - 200.0F + col * 100.0F;
+		position[1] = owner.drawY + 200.0F - row * 100.0F;
+		// TODO: I don't know if copilot is joking
+		return position;
 	}
 	
 	public void init() {
@@ -150,6 +153,11 @@ public class DollManager {
 		this.applyPowersForAllDolls();
 	}
 	
+	public int getMaxBlockPreserved() {
+		int kyoto_count = this.countSpecificDolls(KyotoDoll.class);
+		return kyoto_count * KyotoDoll.BLOCK_PRESERVED;
+	}
+	
 	public void atStartOfTurn() {
 		for (AbstractDoll doll : this.getSpecificDolls(doll -> doll.actAtStartOfTurn))
 			doll.act(AbstractDoll.ActTiming.START_OF_TURN);
@@ -246,7 +254,7 @@ public class DollManager {
 		doll.setDest(row, col);
 	}
 	
-	public void recycleDoll(AbstractDoll doll) {
+	public void recycle(AbstractDoll doll) {
 		int[] rowAndCol = this.getRowAndCol(doll);
 		int row = rowAndCol[0], col = rowAndCol[1];
 		if (row == -1) {
@@ -256,22 +264,47 @@ public class DollManager {
 		
 		doll.onRecycled();
 		doll.onBrokenOrRecycled();
+	}
+	
+	public void remove(AbstractDoll doll) {
+		int[] rowAndCol = this.getRowAndCol(doll);
+		int row = rowAndCol[0], col = rowAndCol[1];
+		if (row == -1) {
+			AliceMagtroidMod.logger.error("DollManager.remove: doll not found");
+			return;
+		}
 		
-		boolean needToWaitMove = false;
-		if (col != dolls.get(row).size() - 1) {
-			needToWaitMove = true;
-			for (int i = col + 1; i < dolls.get(row).size(); i++) {
-				AbstractDoll dollToMove = dolls.get(row).get(i);
-				
-				dollToMove.setDest(row, i - 1);
+		this.dolls.get(row).set(col, null);
+	}
+	
+	public void remove(AbstractDoll... dollsToRemove) {
+		for (AbstractDoll doll : dollsToRemove)
+			this.remove(doll);
+	}
+	
+	public boolean letDollsFillEmptySlots() {
+		boolean needToMove = false;
+		
+		for (int i = 0; i < dolls.size(); i++) {
+			ArrayList<AbstractDoll> vec = dolls.get(i);
+			int k = 0;
+			
+			for (int j = 0; j < vec.size(); j++) {
+				AbstractDoll doll = vec.get(j);
+				if (doll != null) {
+					if (j != k) {
+						doll.setSource(i, j);
+						doll.setDest(i, k);
+						vec.set(k, doll);
+						needToMove = true;
+					}
+					
+					k++;
+				}
 			}
 		}
 		
-		dolls.get(row).remove(col);
-		
-		if (needToWaitMove) {
-			this.addToTop(new WaitDollsToMoveAction());
-		}
+		return needToMove;
 	}
 
 	public int calcDamageOnPlayer(int damage) {
@@ -294,8 +327,45 @@ public class DollManager {
 		return totalToPlayer;
 	}
 
-	public void receiveDamage(int damage) {
-
+	public HashMap<AbstractDoll, Integer> calcDamageOnDolls(int damage) {
+		int res = damage / this.rowCount, reminder = damage % this.rowCount;
+		HashMap<AbstractDoll, Integer> tbl = new HashMap<>();
+		
+		for (int i = 0; i < this.rowCount; i++) {
+			int dmg = res + (i < reminder ? 1 : 0);
+			ArrayList<AbstractDoll> dollsInRow = dolls.get(i);
+			
+			for (AbstractDoll doll : dollsInRow) {
+				if (dmg == 0)
+					break;
+				
+				int remaining = doll.calcRemainingDamage(dmg);
+				tbl.put(doll, dmg - remaining);
+				dmg = remaining;
+			}
+		}
+		
+		return tbl;
+	}
+	
+	// returns true if any doll is broken by the damage
+	public boolean handleDamageTbl(HashMap<AbstractDoll, Integer> tbl) {
+		boolean anyDollBroken = false;
+		
+		for (Map.Entry<AbstractDoll, Integer> entry : tbl.entrySet()) {
+			AbstractDoll doll = entry.getKey();
+			int dmg = entry.getValue();
+			
+			if (doll.takeDamage(dmg))
+				anyDollBroken = true;
+		}
+		
+		return anyDollBroken;
+	}
+	
+	public void checkUpdateAndAddAction() {
+		if (this.letDollsFillEmptySlots())
+			this.addToTop(new WaitDollsToMoveAction());
 	}
 	
 	public void addToBot(AbstractGameAction action) {

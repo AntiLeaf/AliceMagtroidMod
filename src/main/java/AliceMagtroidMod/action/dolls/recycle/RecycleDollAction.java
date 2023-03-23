@@ -30,7 +30,8 @@ public class RecycleDollAction extends AbstractGameAction {
 			this.tickDuration();
 			
 			if (this.isDone) {
-				AliceMagtroidMod.dollManager.recycleDoll(this.doll);
+				AliceMagtroidMod.dollManager.recycle(this.doll);
+				AliceMagtroidMod.dollManager.checkUpdateAndAddAction();
 			}
 		}
 	}

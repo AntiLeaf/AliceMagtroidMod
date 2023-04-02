@@ -1,10 +1,11 @@
 package AliceMagtroidMod;
 
-import AliceMagtroidMod.action.dolls.DollsClearBlockOnPlayerTurnStartAction;
-import AliceMagtroidMod.action.dolls.DollsTakeDamageAction;
-import AliceMagtroidMod.cards.AliceMagtroid.*;
+import AliceMagtroidMod.action.doll.DollsClearBlockOnPlayerTurnStartAction;
+import AliceMagtroidMod.action.doll.DollsTakeDamageAction;
+import AliceMagtroidMod.cards.DEPRECATED.*;
 import AliceMagtroidMod.characters.AliceMagtroid;
 import AliceMagtroidMod.doll.DollManager;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import AliceMagtroidMod.relics.EyeOfYatagarasu;
 import AliceMagtroidMod.variable.HeatVariable;
 import AliceMagtroidMod.variable.TempHPVariable;
@@ -29,7 +30,7 @@ import org.apache.logging.log4j.Logger;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import static AliceMagtroidMod.patches.AliceMagtroidModClassEnum.*;
+import static AliceMagtroidMod.patches.enums.AliceMagtroidModClassEnum.*;
 import static AliceMagtroidMod.patches.enums.AbstractCardEnum.*;
 
 @SuppressWarnings("Duplicates")
@@ -75,19 +76,6 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	
 	private static final String MY_CHARACTER_BUTTON = "img/charSelect/AliceButton.png";
 	private static final String ALICE_PORTRAIT = "img/charSelect/AlicePortrait.jpg";
-	
-	private static final String CARD_STRING = "localization/AliceMod_cards.json";
-	private static final String CARD_STRING_ZH = "localization/AliceMod_cards-zh.json";
-	private static final String RELIC_STRING = "localization/AliceMod_relics.json";
-	private static final String RELIC_STRING_ZH = "localization/AliceMod_relics-zh.json";
-	private static final String POWER_STRING = "localization/AliceMod_powers.json";
-	private static final String POWER_STRING_ZH = "localization/AliceMod_powers-zh.json";
-	private static final String POTION_STRING = "localization/AliceMod_potions.json";
-	private static final String POTION_STRING_ZH = "localization/AliceMod_potions-zh.json";
-	private static final String KEYWORD_STRING = "localization/AliceMod_keywords.json";
-	private static final String KEYWORD_STRING_ZH = "localization/AliceMod_keywords-zh.json";
-	private static final String EVENT_PATH = "localization/AliceMod_events.json";
-	private static final String EVENT_PATH_ZH = "localization/AliceMod_events-zh.json";
 	
 	private final ArrayList<AbstractCard> cardsToAdd = new ArrayList<>();
 	//private ArrayList<AbstractRelic> relicsToAdd = new ArrayList<>();
@@ -194,6 +182,19 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		new AliceMagtroidMod();
 	}
 	
+	public static String getLangShort() {
+		if (Settings.language == Settings.GameLanguage.ZHS ||
+				Settings.language == Settings.GameLanguage.ZHT) {
+			return "zhs";
+		} else {
+			return "eng";
+		}
+	}
+	
+	private static String getLocalizeFile(String lang, String name) {
+		return "localization/" + lang + "/" + name + ".json";
+	}
+	
 	private static String loadJson(String jsonPath) {
 		return Gdx.files.internal(jsonPath).readString(String.valueOf(StandardCharsets.UTF_8));
 	}
@@ -201,16 +202,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	public void receiveEditKeywords() {
 		logger.info("Setting up custom keywords");
 		
-		String keywordsPath;
-		switch (Settings.language) {
-			case ZHT:
-			case ZHS:
-				keywordsPath = KEYWORD_STRING_ZH;
-				break;
-			default:
-				keywordsPath = KEYWORD_STRING;
-				break;
-		}
+		String keywordsPath = getLocalizeFile(getLangShort(), "keywords");
 		
 		Gson gson = new Gson();
 		Keywords keywords;
@@ -226,52 +218,31 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	public void receiveEditStrings() {
 		logger.info("start editing strings");
 		
-		String relicStrings,
-				cardStrings,
-				powerStrings,
-				potionStrings,
-				eventStrings,
-				relic,
-				card,
-				power,
-				potion,
-				event;
+		String lang = getLangShort();
 		
-		if (Settings.language == Settings.GameLanguage.ZHS || Settings.language == Settings.GameLanguage.ZHT) {
-			logger.info("lang == zh");
-			card = CARD_STRING_ZH;
-			relic = RELIC_STRING_ZH;
-			power = POWER_STRING_ZH;
-			potion = POTION_STRING_ZH;
-			event = EVENT_PATH_ZH;
-		} else {
-			logger.info("lang == eng");
-			card = CARD_STRING;
-			relic = RELIC_STRING;
-			power = POWER_STRING;
-			potion = POTION_STRING;
-			event = EVENT_PATH;
-		}
-		
-		relicStrings = Gdx.files.internal(relic).readString(
-				String.valueOf(StandardCharsets.UTF_8));
+		String relicStrings = Gdx.files.internal(getLocalizeFile(lang, "relics"))
+				.readString(String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(RelicStrings.class, relicStrings);
-
-		cardStrings = Gdx.files.internal(card).readString(
-				String.valueOf(StandardCharsets.UTF_8));
+		
+		String cardStrings = Gdx.files.internal(getLocalizeFile(lang, "cards"))
+				.readString(String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(CardStrings.class, cardStrings);
 
-		powerStrings = Gdx.files.internal(power).readString(
-				String.valueOf(StandardCharsets.UTF_8));
+		String powerStrings = Gdx.files.internal(getLocalizeFile(lang, "powers"))
+				.readString(String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(PowerStrings.class, powerStrings);
 
-		potionStrings = Gdx.files.internal(potion).readString(
-				String.valueOf(StandardCharsets.UTF_8));
+		String potionStrings = Gdx.files.internal(getLocalizeFile(lang, "potions"))
+				.readString(String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(PotionStrings.class, potionStrings);
 
-		eventStrings = Gdx.files.internal(event).readString(
-				String.valueOf(StandardCharsets.UTF_8));
+		String eventStrings = Gdx.files.internal(getLocalizeFile(lang, "events"))
+				.readString(String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(EventStrings.class, eventStrings);
+		
+		String dollStrings = Gdx.files.internal(getLocalizeFile(lang, "dolls"))
+				.readString(String.valueOf(StandardCharsets.UTF_8));
+		BaseMod.loadCustomStrings(DollStrings.class, dollStrings);
 
 		logger.info("done editing strings");
 	}
@@ -294,7 +265,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	}
 	
 	public void receivePostEnergyRecharge() {
-	
+		// Auto-generated method stub
 	}
 	
 	public void receivePowersModified() {
@@ -311,7 +282,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	}
 	
 	public void receivePostInitialize() {
-		// Nothing
+		// Auto-generated method stub
 	}
 
 	public void receiveOnPlayerTurnStart() {

@@ -1,6 +1,7 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import AliceMagtroidMod.patches.enums.DamageTypeEnum;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -16,6 +17,7 @@ public class ShanghaiDoll extends AbstractDoll {
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
+	public static final DollStrings dollStrings = DollStrings.getDollString(ID);
 	
 	public static final int MAX_HP = 4;
 	public static final int SPAWN_DMG = 8;
@@ -25,7 +27,12 @@ public class ShanghaiDoll extends AbstractDoll {
 	public static final int HOURAI_ACT_DMG = 2;
 	
 	ShanghaiDoll() {
-		super();
+		super(
+				ID,
+				IMG_PATH,
+				dollStrings.NAME,
+				dollStrings.DESCRIPTION
+		);
 		
 		this.maxHP = this.HP = MAX_HP;
 		
@@ -36,9 +43,7 @@ public class ShanghaiDoll extends AbstractDoll {
 	}
 	
 	public void updateDescription() {
-		// TODO
-		this.description = "Spawn: Deal " + this.spawnAmount + " damage to a random enemy.\n"
-				+ "Act (when commanded): Deal " + this.actAmount + " damage to all enemies.";
+		this.description = this.parse(this.rawDescription, HOURAI_SPAWN_DMG, HOURAI_ACT_DMG);
 	}
 	
 	@Override
@@ -78,10 +83,6 @@ public class ShanghaiDoll extends AbstractDoll {
 	
 	public AbstractDoll makeCopy() {
 		return new ShanghaiDoll();
-	}
-	
-	public void render(SpriteBatch sb) {
-		// TODO
 	}
 	
 	public void playSFX() {

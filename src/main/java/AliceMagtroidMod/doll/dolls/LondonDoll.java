@@ -1,6 +1,9 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.action.doll.MoveDollAction;
+import AliceMagtroidMod.action.doll.spawn.SpawnDollAction;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import AliceMagtroidMod.patches.enums.DamageTypeEnum;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -15,6 +18,7 @@ public class LondonDoll extends AbstractDoll {
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
+	public static final DollStrings dollStrings = DollStrings.getDollString(ID);
 	
 	public static final int MAX_HP = 1;
 	public static final int ACT_DMG = 3;
@@ -24,10 +28,16 @@ public class LondonDoll extends AbstractDoll {
 	public static final int HOURAI_ACT_BLOCK = 2;
 	
 	LondonDoll() {
-		super();
+		super(
+				ID,
+				IMG_PATH,
+				dollStrings.NAME,
+				dollStrings.DESCRIPTION
+		);
 		
 		this.maxHP = this.HP = MAX_HP;
 		
+		this.passiveAmount = this.basePassiveAmount = ACT_DMG;
 		this.actAmount = this.baseActAmount = ACT_DMG;
 		
 		this.actAtStartOfTurn = true;
@@ -35,7 +45,7 @@ public class LondonDoll extends AbstractDoll {
 	}
 	
 	public void updateDescription() {
-		// TODO
+		this.description = this.parse(this.rawDescription, HOURAI_ACT_DMG);
 	}
 	
 	@Override
@@ -75,16 +85,14 @@ public class LondonDoll extends AbstractDoll {
 					AbstractDungeon.player,
 					this.actAmount));
 			
-			// TODO: Move itself to the leftmost
+			this.addToBot(new MoveDollAction(this, Position.LEFTMOST, this.getRow(), -1));
 		}
 	}
 	
 	@Override
 	public void onBroken() {
 		AbstractDoll newDoll = AbstractDoll.getRandomDollExceptLondon();
-		AliceMagtroidMod.dollManager.pushSpawnQueue(newDoll,
-				Position.RIGHTMOST,
-				this.getRow(), -1);
+		this.addToBot(new SpawnDollAction(newDoll, Position.RIGHTMOST, this.getRow()));
 	}
 	
 	public void applyPowers() {
@@ -95,10 +103,6 @@ public class LondonDoll extends AbstractDoll {
 	
 	public AbstractDoll makeCopy() {
 		return new LondonDoll();
-	}
-	
-	public void render(SpriteBatch sb) {
-		// TODO
 	}
 	
 	public void playSFX() {

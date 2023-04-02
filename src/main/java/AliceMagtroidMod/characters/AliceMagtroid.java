@@ -1,10 +1,10 @@
 package AliceMagtroidMod.characters;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.cards.AliceMagtroid.Defend_AliceMagtroid;
-import AliceMagtroidMod.cards.AliceMagtroid.Strike_AliceMagtroid;
+import AliceMagtroidMod.cards.DEPRECATED.Defend_AliceMagtroid;
+import AliceMagtroidMod.cards.DEPRECATED.Strike_AliceMagtroid;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
-import AliceMagtroidMod.patches.AliceMagtroidModClassEnum;
+import AliceMagtroidMod.patches.enums.AliceMagtroidModClassEnum;
 import AliceMagtroidMod.relics.EyeOfYatagarasu;
 import basemod.abstracts.CustomPlayer;
 import com.badlogic.gdx.graphics.Color;
@@ -175,7 +175,7 @@ public class AliceMagtroid extends CustomPlayer {
 	}
 	
 	public void doCharSelectScreenSelectEffect() {
-		CardCrawlGame.sound.playA("SELECT_REIUJI", MathUtils.random(-0.1F, 0.1F));
+		CardCrawlGame.sound.playA("SELECT_ALICE_MAGTROID", MathUtils.random(-0.1F, 0.1F));
 		CardCrawlGame.screenShake.shake(
 				ScreenShake.ShakeIntensity.MED,
 				ScreenShake.ShakeDur.SHORT,
@@ -184,14 +184,14 @@ public class AliceMagtroid extends CustomPlayer {
 	}
 	
 	public String getCustomModeCharacterButtonSoundKey() {
-		return "SELECT_REIUJI";
+		return "SELECT_ALICE_MAGTROID";
 	}
 	
 	public String getLocalizedCharacterName() {
 		String char_name;
 		if ((Settings.language == Settings.GameLanguage.ZHS)
 				|| (Settings.language == Settings.GameLanguage.ZHT)) {
-			char_name = "灵乌路空";
+			char_name = "爱丽丝·玛格特罗伊德";
 		} else if (Settings.language == Settings.GameLanguage.JPN) {
 			char_name = "アリス・マーガトロイド";
 		} else {
@@ -204,7 +204,6 @@ public class AliceMagtroid extends CustomPlayer {
 		return new AliceMagtroid(this.name);
 	}
 	
-	@Override
 	public String getVampireText() { // TODO: Change here to change the vampire text
 		return com.megacrit.cardcrawl.events.city.Vampires.DESCRIPTIONS[1];
 	}
@@ -213,6 +212,7 @@ public class AliceMagtroid extends CustomPlayer {
 		return AliceMagtroidMod.PUPPETEER;
 	}
 	
+	@Override
 	public void updateOrb(int orbCount) {
 		this.energyOrb.updateOrb(orbCount);
 	}

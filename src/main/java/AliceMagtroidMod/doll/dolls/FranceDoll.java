@@ -1,6 +1,7 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import AliceMagtroidMod.patches.enums.DamageTypeEnum;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -15,6 +16,7 @@ public class FranceDoll extends AbstractDoll {
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
+	public static final DollStrings dollStrings = DollStrings.getDollString(ID);
 	
 	public static final int MAX_HP = 8;
 	public static final int SPAWN_BLOCK = 3;
@@ -24,7 +26,12 @@ public class FranceDoll extends AbstractDoll {
 	public static final int HOURAI_ACT_BLOCK = 3;
 	
 	FranceDoll() {
-		super();
+		super(
+				ID,
+				IMG_PATH,
+				dollStrings.NAME,
+				dollStrings.DESCRIPTION
+		);
 		
 		this.maxHP = this.HP = MAX_HP;
 		
@@ -35,9 +42,7 @@ public class FranceDoll extends AbstractDoll {
 	}
 	
 	public void updateDescription() {
-		// TODO
-		this.description = "Spawn: France dolls spawn with " + this.spawnAmount + " block.\n"
-				+ "Act (at start of turn): Gain " + this.actAmount + " block.";
+		this.description = this.parse(this.rawDescription, HOURAI_SPAWN_BLOCK);
 	}
 	
 	@Override
@@ -67,10 +72,6 @@ public class FranceDoll extends AbstractDoll {
 	
 	public AbstractDoll makeCopy() {
 		return new FranceDoll();
-	}
-	
-	public void render(SpriteBatch sb) {
-		// TODO
 	}
 	
 	public void playSFX() {

@@ -1,6 +1,7 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -10,6 +11,7 @@ public class OrleansDoll extends AbstractDoll {
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
+	public static final DollStrings dollStrings = DollStrings.getDollString(ID);
 	
 	public static final int MAX_HP = 5;
 	public static final int SPAWN_BLOCK = 3;
@@ -19,7 +21,12 @@ public class OrleansDoll extends AbstractDoll {
 	public static final int HOURAI_ACT_BLOCK = 1;
 	
 	OrleansDoll() {
-		super();
+		super(
+				ID,
+				IMG_PATH,
+				dollStrings.NAME,
+				dollStrings.DESCRIPTION
+		);
 		
 		this.maxHP = this.HP = MAX_HP;
 		
@@ -30,9 +37,7 @@ public class OrleansDoll extends AbstractDoll {
 	}
 	
 	public void updateDescription() {
-		// TODO
-		this.description = "Spawn: Alice gains " + this.spawnAmount + " block.\n"
-				+ "Act (at start of turn): Alice and all dolls gain " + this.actAmount + " block.";
+		this.description = this.parse(this.rawDescription, HOURAI_SPAWN_BLOCK, HOURAI_ACT_BLOCK);
 	}
 	
 	@Override
@@ -62,10 +67,6 @@ public class OrleansDoll extends AbstractDoll {
 	
 	public AbstractDoll makeCopy() {
 		return new OrleansDoll();
-	}
-	
-	public void render(SpriteBatch sb) {
-		// TODO
 	}
 	
 	public void playSFX() {

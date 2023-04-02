@@ -1,6 +1,7 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import AliceMagtroidMod.patches.enums.DamageTypeEnum;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -16,39 +17,43 @@ public class KyotoDoll extends AbstractDoll {
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
+	public static final DollStrings dollStrings = DollStrings.getDollString(ID);
 	
-	public static final int MAX_HP = 4;
+	public static final int MAX_HP = 3;
 
-	public static final int BLOCK_PRESERVED = 8;
+	public static final int BLOCK_PRESERVED = 6;
 	
 	public static final int HOURAI_DMG_RATE = 25;
 	
 	KyotoDoll() {
-		super();
+		super(
+				ID,
+				IMG_PATH,
+				dollStrings.NAME,
+				dollStrings.DESCRIPTION
+		);
 		
 		this.maxHP = this.HP = MAX_HP;
+		this.passiveAmount = this.basePassiveAmount = BLOCK_PRESERVED;
 	}
 	
 	public void updateDescription() {
-		// TODO
+		this.description = this.parse(this.rawDescription, HOURAI_DMG_RATE);
 	}
 	
 	public void act(ActTiming timing) {
 		this.applyPowers();
 		
-		this.addToBot(new DrawCardAction(AbstractDungeon.player, 1));
+		this.addToTop(new DrawCardAction(AbstractDungeon.player, 1));
 	}
 	
 	public void applyPowers() {
-		// TODO
+		int hourai_count = AliceMagtroidMod.dollManager.getHouraiCount();
+		this.actAmount = AbstractDungeon.player.currentBlock * (HOURAI_DMG_RATE * hourai_count) / 100;
 	}
 	
 	public AbstractDoll makeCopy() {
 		return new KyotoDoll();
-	}
-	
-	public void render(SpriteBatch sb) {
-		// TODO
 	}
 	
 	public void playSFX() {

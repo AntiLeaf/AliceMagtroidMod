@@ -1,7 +1,7 @@
 package AliceMagtroidMod.doll;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.action.dolls.WaitDollsToMoveAction;
+import AliceMagtroidMod.action.doll.WaitDollsToMoveAction;
 import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.doll.dolls.HouraiDoll;
 import AliceMagtroidMod.doll.dolls.KyotoDoll;
@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +35,9 @@ public class DollManager {
 		this.dolls.add(new ArrayList<>());
 	}
 	
-	public float[] calcLeftTopPosition(int row, int col) {
+	public float[] calcCenterPosition(int row, int col) {
 		float[] position = new float[2];
-		
-		position[0] = owner.drawX - 200.0F + col * 100.0F;
-		position[1] = owner.drawY + 200.0F - row * 100.0F;
-		// TODO: I don't know if copilot is joking
+		// TODO
 		return position;
 	}
 	
@@ -177,10 +173,15 @@ public class DollManager {
 		// the action should be added outside this function
 	}
 	
-	public void updateMovingDolls(AbstractGameAction action, float time) {
-		for (AbstractDoll doll : this.getSpecificDolls(doll -> doll.source[0] != -1))
-			doll.updateWhileMoving(action, time);
+	public void updateAnimation() {
+		for (AbstractDoll doll : this.getAllDolls())
+			doll.updateAnimation();
 	}
+	
+//	public void updateMovingDolls(AbstractGameAction action, float time) {
+//		for (AbstractDoll doll : this.getSpecificDolls(doll -> doll.source[0] != -1))
+//			doll.updateWhileMoving(action, time);
+//	}
 	
 	public void resetAllSourceAndDest() {
 		for (AbstractDoll doll : this.getAllDolls())
@@ -252,6 +253,7 @@ public class DollManager {
 		
 		doll.setSource(source[0], source[1]);
 		doll.setDest(row, col);
+		doll.beginToMove();
 	}
 	
 	public void recycle(AbstractDoll doll) {
@@ -295,6 +297,8 @@ public class DollManager {
 					if (j != k) {
 						doll.setSource(i, j);
 						doll.setDest(i, k);
+						doll.beginToMove();
+						
 						vec.set(k, doll);
 						needToMove = true;
 					}

@@ -1,6 +1,6 @@
 package AliceMagtroidMod.cardmodifier.modifiers;
 
-import AliceMagtroidMod.cards.AliceMagtroid.UniverseSingsToMe;
+import AliceMagtroidMod.cards.DEPRECATED.UniverseSingsToMe;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.interfaces.AlternateCardCostModifier;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsInHandAction;

@@ -1,25 +1,26 @@
 package AliceMagtroidMod.doll.dolls;
 
 import AliceMagtroidMod.AliceMagtroidMod;
-import AliceMagtroidMod.patches.enums.DamageTypeEnum;
+import AliceMagtroidMod.action.doll.act.DollActAction;
+import AliceMagtroidMod.doll.localization.DollStrings;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class HouraiDoll extends AbstractDoll {
 	public static final String SIMPLE_NAME = HouraiDoll.class.getSimpleName();
 	public static final String ID = AliceMagtroidMod.SIMPLE_NAME
 			+ ":" + SIMPLE_NAME;
 	public static final String IMG_PATH = "img/dolls/" + SIMPLE_NAME + ".png";
+	public static final DollStrings dollStrings = DollStrings.getDollString(ID);
 	
 	public static final int MAX_HP = 5;
 	
 	HouraiDoll() {
-		super();
+		super(
+				ID,
+				IMG_PATH,
+				dollStrings.NAME,
+				dollStrings.DESCRIPTION
+		);
 		
 		this.maxHP = this.HP = MAX_HP;
 		
@@ -27,10 +28,7 @@ public class HouraiDoll extends AbstractDoll {
 	}
 	
 	public void updateDescription() {
-		// TODO
-		this.description = "Hourai dolls can buff other kinds of dolls.\n"
-				+ "Act (when commanded): All rightmost dolls will act extra "
-				+ this.actAmount + " time(s) next time.";
+		this.description = this.parse(this.rawDescription);
 	}
 	
 	public void act(ActTiming timing) {
@@ -38,9 +36,7 @@ public class HouraiDoll extends AbstractDoll {
 		
 		for (AbstractDoll doll : AliceMagtroidMod.dollManager.getRightmostDolls())
 			if (doll != null && !(doll instanceof HouraiDoll)) {
-//				doll.extraActCount += this.actAmount;
-				
-				AliceMagtroidMod.dollManager.pushActQueue(doll, ActTiming.HOURAI);
+				this.addToBot(new DollActAction(doll, ActTiming.HOURAI));
 			}
 	}
 	
@@ -48,10 +44,6 @@ public class HouraiDoll extends AbstractDoll {
 	
 	public AbstractDoll makeCopy() {
 		return new HouraiDoll();
-	}
-	
-	public void render(SpriteBatch sb) {
-		// TODO
 	}
 	
 	public void playSFX() {

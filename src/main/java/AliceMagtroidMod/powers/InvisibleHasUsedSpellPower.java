@@ -56,6 +56,6 @@ public class InvisibleHasUsedSpellPower extends AbstractPower implements Invisib
 
 	@Override
 	public void atEndOfRound() {
-		this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, ID));
+		this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
 	}
 }

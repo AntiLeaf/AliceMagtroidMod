@@ -2,7 +2,7 @@ package AliceMagtroidMod.cards.AliceMagtroidDerivation;
 
 import AliceMagtroidMod.AliceMagtroidMod;
 import AliceMagtroidMod.cards.AbstractAliceMagtroidCard;
-import AliceMagtroidMod.cards.AliceMagtroid.UniverseSingsToMe;
+import AliceMagtroidMod.cards.DEPRECATED.UniverseSingsToMe;
 import AliceMagtroidMod.patches.enums.AbstractCardEnum;
 import basemod.BaseMod;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.SelectCardsAction;

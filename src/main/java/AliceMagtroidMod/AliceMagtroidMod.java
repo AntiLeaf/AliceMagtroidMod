@@ -13,6 +13,7 @@ import basemod.BaseMod;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -22,6 +23,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
@@ -52,7 +54,8 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		OnPlayerDamagedSubscriber,
 		OnStartBattleSubscriber,
 		OnPlayerTurnStartSubscriber,
-		PostPlayerUpdateSubscriber {
+		PostPlayerUpdateSubscriber,
+		RenderSubscriber {
 	public static final String SIMPLE_NAME = AliceMagtroidMod.class.getSimpleName();
 	
 	public static final Logger logger = LogManager.getLogger(AliceMagtroidMod.class.getName());
@@ -240,18 +243,20 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 				.readString(String.valueOf(StandardCharsets.UTF_8));
 		BaseMod.loadCustomStrings(EventStrings.class, eventStrings);
 		
-		String dollStrings = Gdx.files.internal(getLocalizeFile(lang, "dolls"))
-				.readString(String.valueOf(StandardCharsets.UTF_8));
-		BaseMod.loadCustomStrings(DollStrings.class, dollStrings);
+//		String dollStrings = Gdx.files.internal(getLocalizeFile(lang, "dolls"))
+//				.readString(String.valueOf(StandardCharsets.UTF_8));
+//		BaseMod.loadCustomStrings(DollStrings.class, dollStrings);
+		DollStrings.loadDollStrings(Gdx.files.internal(getLocalizeFile(lang, "dolls"))
+				.readString(String.valueOf(StandardCharsets.UTF_8)));
 
 		logger.info("done editing strings");
 	}
 	
-	public void receivePostExhaust(AbstractCard c) {
+	public void receivePostExhaust(AbstractCard card) {
 		// Auto-generated method stub
 	}
 	
-	public void receivePostBattle(AbstractRoom r) {
+	public void receivePostBattle(AbstractRoom room) {
 		dollManager.clear();
 		dollManager = null;
 	}
@@ -277,7 +282,7 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		// Auto-generated method stub
 	}
 	
-	public void receivePostDraw(AbstractCard arg0) {
+	public void receivePostDraw(AbstractCard card) {
 		// Auto-generated method stub
 	}
 	
@@ -296,13 +301,18 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	}
 	
 	public int receiveOnPlayerDamaged(int amount, DamageInfo damageInfo) {
-		if (damageInfo.type == DamageInfo.DamageType.HP_LOSS)
+		if (damageInfo.type == DamageInfo.DamageType.HP_LOSS || dollManager == null)
 			return amount;
 		
-		int new_amt = dollManager.calcDamageOnPlayer(amount);
+		if (!(damageInfo.owner instanceof AbstractMonster))
+			return amount;
+		
+		int index = getMonsterIndex((AbstractMonster) damageInfo.owner);
+		
+		int new_amt = dollManager.calcDamageOnPlayer(amount, index);
 		if (new_amt != amount) {
 			AbstractDungeon.actionManager.addToTop(
-					new DollsTakeDamageAction(dollManager.calcDamageOnDolls(amount)));
+					new DollsTakeDamageAction(dollManager.calcDamageOnDolls(amount, index)));
 		}
 		
 		return new_amt;
@@ -317,7 +327,11 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 		else
 			return amount;
 	}
-
+	
+	public void receiveRender(SpriteBatch sb) {
+		if (dollManager != null)
+			dollManager.render(sb);
+	}
 
 	private void loadCardsToAdd() {
 		cardsToAdd.clear();
@@ -349,9 +363,17 @@ public class AliceMagtroidMod implements PostExhaustSubscriber,
 	
 	public static DollManager dollManager;
 	
-//	public static AbstractCard getRandomReiujiCard() {
-//		return AbstractDungeon.returnTrulyRandomCardInCombat().makeCopy();
-//	}
+	public static int getMonsterIndex(AbstractMonster m) {
+		int index = 0;
+		for (AbstractMonster mon : AbstractDungeon.getMonsters().monsters) {
+			if (mon == m)
+				break;
+			
+			if (!mon.isDeadOrEscaped())
+				index++;
+		}
+		return index;
+	}
 }
 
 /*

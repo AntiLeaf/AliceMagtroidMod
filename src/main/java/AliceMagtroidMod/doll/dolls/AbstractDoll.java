@@ -9,10 +9,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.Hitbox;
-import com.megacrit.cardcrawl.helpers.MathHelper;
-import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.helpers.TipHelper;
+import com.megacrit.cardcrawl.helpers.*;
 import com.megacrit.cardcrawl.random.Random;
 
 import java.lang.reflect.Array;
@@ -20,20 +17,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class AbstractDoll {
-	public static float WIDTH = 96.0F;
+	public static final float WIDTH = 96.0F * Settings.scale;
+	public static final float HEIGHT = 96.0F * Settings.scale;
+	public static final float NUM_X_OFFSET = 20.0F * Settings.scale;
+	public static final float NUM_Y_OFFSET = -12.0F * Settings.scale;
+	protected static final float TIP_OFFSET_R_X = 20.0F * Settings.scale;
+	protected static final float TIP_OFFSET_L_X = -380.0F * Settings.scale;
+	protected static final float TIP_OFFSET_Y = 80.0F * Settings.scale;
 	
-	public static float SPAWN_ANIM_TIME = 0.2F;
-	public static float MOVE_ANIM_TIME = 0.5F;
-	public static float ACT_ANIM_TIME = 0.4F;
-	public static float HIT_ANIM_TIME = 0.2F;
-	public static float BROKEN_ANIM_TIME = 0.3F;
-	public static float RECYCLE_ANIM_TIME = 0.5F;
+	public static final float SPAWN_ANIM_TIME = 0.2F;
+	public static final float MOVE_ANIM_TIME = 0.5F;
+	public static final float ACT_ANIM_TIME = 0.4F;
+	public static final float HIT_ANIM_TIME = 0.2F;
+	public static final float BROKEN_ANIM_TIME = 0.3F;
+	public static final float RECYCLE_ANIM_TIME = 0.5F;
 	
 	public String ID;
 	public String name;
 	public String rawDescription, description;
 	
-	protected ArrayList<PowerTip> tips = new ArrayList<>(); // TODO: What is this?
+	protected ArrayList<PowerTip> tips = new ArrayList<>();
 	
 	public int maxHP = 0; // may not be used
 	public int HP = 0;
@@ -63,15 +66,16 @@ public abstract class AbstractDoll {
 	
 	protected Color color, shineColor;
 	
-	public int[] shown_values = new int[2];
+	public int shownValue = -1;
+	public boolean goldenValue = false;
 	protected float spawnAnimTimer, moveAnimTimer, actAnimTimer, hitAnimTimer, brokenAnimTimer, recycleAnimTimer;
 	// only one of the above timers can be non-zero at a time
 	
-	public int[] source, dest;
+	public int[] slot, source, dest;
 	
 	public AbstractDoll(String ID, String IMG_PATH, String name, String rawDescription) {
 		this.ID = ID;
-		this.img = new Texture(Gdx.files.internal(IMG_PATH));
+		this.img = ImageMaster.loadImage(IMG_PATH);
 		this.name = name;
 		this.rawDescription = rawDescription;
 		this.updateDescription();
@@ -79,8 +83,7 @@ public abstract class AbstractDoll {
 		this.color = Settings.CREAM_COLOR.cpy();
 		this.shineColor = new Color(1.0F, 1.0F, 1.0F, 0.0F);
 		
-		this.hb = new Hitbox(WIDTH * Settings.scale, WIDTH * Settings.scale);
-		this.img = null;
+		this.hb = new Hitbox(WIDTH, HEIGHT);
 		this.fontScale = 0.7F;
 		
 		this.spawnAnimTimer = 0.0F;
@@ -93,6 +96,7 @@ public abstract class AbstractDoll {
 		this.cX = 0.0F;
 		this.cY = 0.0F;
 		
+		slot = new int[]{-1, -1};
 		source = new int[]{-1, -1};
 		dest = new int[]{-1, -1};
 	}
@@ -191,12 +195,45 @@ public abstract class AbstractDoll {
 //	}
 	
 	public void render(SpriteBatch sb) {
+		sb.setColor(this.color);
+		sb.draw(this.img,
+				this.cX - WIDTH / 2,
+				this.cY - HEIGHT / 2,
+				WIDTH,
+				HEIGHT
+		);
 		
+		
+		this.renderText(sb);
+		this.hb.render(sb);
+		this.renderTip(sb);
+		this.renderHealthBar(sb);
+	}
+	
+	protected void renderText(SpriteBatch sb) {
+		if (this.shownValue != -1) {
+			Color c = this.goldenValue ? Settings.GOLD_COLOR : Settings.CREAM_COLOR;
+			FontHelper.renderFontCentered(
+					sb,
+					FontHelper.topPanelInfoFont,
+					Integer.toString(this.shownValue),
+					this.cX + NUM_X_OFFSET,
+					this.cY + HEIGHT / 2 + NUM_Y_OFFSET,
+					c
+			);
+		}
 	}
 	
 	protected void renderTip(SpriteBatch sb) {
 		if (this.hb.hovered) {
-			// TODO
+			this.tips.clear();
+			this.tips.add(new PowerTip(this.name, this.description));
+			
+			TipHelper.queuePowerTips(
+					this.hb.cX + this.hb.width / 2 + TIP_OFFSET_R_X,
+					this.hb.cY + TipHelper.calculateAdditionalOffset(this.tips, this.hb.cY),
+					this.tips
+			);
 		}
 	}
 	
@@ -214,8 +251,8 @@ public abstract class AbstractDoll {
 		this.hb.update();
 		if (this.hb.hovered) {
 			TipHelper.renderGenericTip(
-					this.tX + WIDTH * Settings.scale,
-					this.tY + WIDTH * (2.0F / 3) * Settings.scale,
+					this.tX + WIDTH,
+					this.tY + HEIGHT * (2.0F / 3),
 					this.name,
 					this.description
 			);
@@ -294,15 +331,15 @@ public abstract class AbstractDoll {
 //	}
 	
 	public int getRow() {
-		return AliceMagtroidMod.dollManager.getRow(this);
+		return this.slot[0];
 	}
 	
 	public int getCol() {
-		return AliceMagtroidMod.dollManager.getCol(this);
+		return this.slot[1];
 	}
 	
 	public int[] getRowAndCol() {
-		return AliceMagtroidMod.dollManager.getRowAndCol(this);
+		return this.slot;
 	}
 	
 	public void setSource(int[] rowAndCol) {
@@ -334,6 +371,16 @@ public abstract class AbstractDoll {
 		if (this.moveAnimTimer > 0.0F) {
 			this.moveAnimTimer = 0.0F;
 		}
+	}
+	
+	public void setSlot(int row, int col) {
+		this.slot[0] = row;
+		this.slot[1] = col;
+	}
+	
+	public void setSlot(int[] rowAndCol) {
+		this.slot[0] = rowAndCol[0];
+		this.slot[1] = rowAndCol[1];
 	}
 	
 	public void beginToSpawn() {

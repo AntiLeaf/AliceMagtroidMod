@@ -5,6 +5,7 @@ import AliceMagtroidMod.action.doll.WaitDollsToMoveAction;
 import AliceMagtroidMod.doll.dolls.AbstractDoll;
 import AliceMagtroidMod.doll.dolls.HouraiDoll;
 import AliceMagtroidMod.doll.dolls.KyotoDoll;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -311,45 +312,23 @@ public class DollManager {
 		return needToMove;
 	}
 
-	public int calcDamageOnPlayer(int damage) {
-		int res = damage / this.rowCount, reminder = damage % this.rowCount;
-
-		int totalToPlayer = 0;
-		for (int i = 0; i < this.rowCount; i++) {
-			int dmg = res + (i < reminder ? 1 : 0);
-			ArrayList<AbstractDoll> dollsInRow = dolls.get(i);
-
-			for (AbstractDoll doll : dollsInRow) {
-				if (dmg == 0)
-					break;
-				dmg = doll.calcRemainingDamage(dmg);
-			}
-
-			totalToPlayer += dmg;
-		}
-
-		return totalToPlayer;
+	public int calcDamageOnPlayer(int damage, int index) {
+		if (index >= this.rowCount || this.dolls.get(index).isEmpty())
+			return 0;
+		
+		AbstractDoll doll = this.dolls.get(index).get(0);
+		return doll.calcRemainingDamage(damage);
 	}
 
-	public HashMap<AbstractDoll, Integer> calcDamageOnDolls(int damage) {
-		int res = damage / this.rowCount, reminder = damage % this.rowCount;
-		HashMap<AbstractDoll, Integer> tbl = new HashMap<>();
+	public HashMap<AbstractDoll, Integer> calcDamageOnDolls(int damage, int index) {
+		if (index >= this.rowCount || this.dolls.get(index).isEmpty())
+			return new HashMap<>();
 		
-		for (int i = 0; i < this.rowCount; i++) {
-			int dmg = res + (i < reminder ? 1 : 0);
-			ArrayList<AbstractDoll> dollsInRow = dolls.get(i);
-			
-			for (AbstractDoll doll : dollsInRow) {
-				if (dmg == 0)
-					break;
-				
-				int remaining = doll.calcRemainingDamage(dmg);
-				tbl.put(doll, dmg - remaining);
-				dmg = remaining;
-			}
-		}
+		AbstractDoll doll = this.dolls.get(index).get(0);
+		HashMap<AbstractDoll, Integer> res = new HashMap<>();
+		res.put(doll, damage);
 		
-		return tbl;
+		return res;
 	}
 	
 	// returns true if any doll is broken by the damage
@@ -370,6 +349,11 @@ public class DollManager {
 	public void checkUpdateAndAddAction() {
 		if (this.letDollsFillEmptySlots())
 			this.addToTop(new WaitDollsToMoveAction());
+	}
+	
+	public void render(SpriteBatch sb) {
+		for (AbstractDoll doll : this.getAllDolls())
+			doll.render(sb);
 	}
 	
 	public void addToBot(AbstractGameAction action) {
